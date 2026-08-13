@@ -3,7 +3,6 @@
 import { memo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Countdown } from '@/components/Countdown';
-import { DressCode } from '@/components/DressCode';
 import { Hero } from '@/components/Hero';
 import { InvitationText } from '@/components/InvitationText';
 import { LocationCard } from '@/components/LocationCard';
@@ -168,7 +167,6 @@ const InvitationSections = memo(function InvitationSections() {
       <LocationCard />
       <div className="visual-block visual-block-details flex flex-col justify-center">
         <Countdown />
-        <DressCode />
       </div>
       <div className="visual-block visual-block-rsvp flex flex-col justify-center">
         <RSVPForm />

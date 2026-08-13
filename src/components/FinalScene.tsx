@@ -10,19 +10,17 @@ type FinalSceneProps = {
 };
 
 function getFinalCopy(submission: RSVPSubmission) {
-  if (submission.attendance === 'coming' && submission.guestNames && submission.guestNames.length > 1) {
+  if (submission.attendance === 'coming') {
+    const names = (submission.guestNames || [submission.name]).filter(Boolean);
+    const isCouple = names.length > 1;
     return {
       title: 'Жауабыңыз қабылданды!',
-      body: `${submission.guestNames.join(', ')}, сіздерді асыға күтеміз.`,
-      detail: `${submission.guestNames.length} қонаққа арнайы орын сақталды.`,
-    };
-  }
-
-  if (submission.attendance === 'with_partner') {
-    return {
-      title: 'Тамаша!',
-      body: `${submission.name} және ${submission.partnerName}, екеуіңізді асыға күтеміз.`,
-      detail: 'Сіздерге арнайы орын сақталды.',
+      body: isCouple
+        ? `${names.join(', ')}, сіздерді асыға күтеміз.`
+        : `${submission.name}, сізге арналған орын сақталды.`,
+      detail: isCouple
+        ? 'Сіздерге арнайы орын сақталды.'
+        : 'Маралдың қуанышына ортақ болатыныңызға қуаныштымыз. Кездескенше!',
     };
   }
 

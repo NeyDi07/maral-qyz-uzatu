@@ -6,7 +6,7 @@ import { hasRSVPErrors, rsvpOptions, submitRSVP, validateRSVP } from '@/lib/rsvp
 import { FinalScene } from './FinalScene';
 import { ScrollSection } from './ScrollSection';
 
-type GuestCount = 1 | 2 | '3plus';
+type GuestCount = 1 | 2;
 
 const PersonIcon = ({ className = '' }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -31,16 +31,14 @@ const PeopleIcon = ({ count, className = '' }: { count: number; className?: stri
 );
 
 const guestCountOptions: { value: GuestCount; label: string; helper: string }[] = [
-  { value: 1, label: '1 қонақ', helper: 'Өзім барамын' },
-  { value: 2, label: '2 қонақ', helper: 'Екеуміз барамыз' },
-  { value: '3plus', label: '3+ қонақ', helper: 'Отбасыммен келемін' },
+  { value: 1, label: 'Өзім келемін', helper: 'Жалғыз қонақ' },
+  { value: 2, label: 'Жұбайыммен келемін', helper: 'Екеуміз барамыз' },
 ];
 
 export function RSVPForm() {
   const [attendance, setAttendance] = useState<Attendance | ''>('');
   const [guestCount, setGuestCount] = useState<GuestCount>(1);
   const [guestNames, setGuestNames] = useState<string[]>(['']);
-  const [extraGuestNames, setExtraGuestNames] = useState('');
   const [declineConfirmed, setDeclineConfirmed] = useState(false);
   const [errors, setErrors] = useState<RSVPErrors>({});
   const [submission, setSubmission] = useState<RSVPSubmission | null>(null);
@@ -54,14 +52,12 @@ export function RSVPForm() {
     if (value === 'coming') {
       setGuestCount(1);
       setGuestNames(['']);
-      setExtraGuestNames('');
       setDeclineConfirmed(false);
       return;
     }
 
     if (value === 'not_coming') {
       setGuestNames(['']);
-      setExtraGuestNames('');
       return;
     }
   }
@@ -69,12 +65,7 @@ export function RSVPForm() {
   function handleGuestCountChange(value: GuestCount) {
     setGuestCount(value);
     setErrors((current) => ({ ...current, guestNames: undefined }));
-    setExtraGuestNames('');
-    if (value === '3plus') {
-      setGuestNames(['', '']);
-    } else {
-      setGuestNames((current) => Array.from({ length: value }, (_, index) => current[index] ?? ''));
-    }
+    setGuestNames((current) => Array.from({ length: value }, (_, index) => current[index] ?? ''));
   }
 
   function handleGuestNameChange(index: number, value: string) {
@@ -82,12 +73,9 @@ export function RSVPForm() {
   }
 
   async function handleSubmit() {
-    const activeGuestNames = attendance === 'coming'
-      ? (guestCount === '3plus' ? guestNames.slice(0, 2) : guestNames.slice(0, guestCount as number))
-      : [];
+    const activeGuestNames = attendance === 'coming' ? guestNames.slice(0, guestCount) : [];
     const primaryName = activeGuestNames[0]?.trim() || '';
-    const finalExtra = attendance === 'coming' && guestCount === '3plus' ? extraGuestNames.trim() : undefined;
-    const nextErrors = validateRSVP({ name: primaryName, attendance, guestNames: activeGuestNames, partnerName: '', declineConfirmed, extraGuestNames: finalExtra });
+    const nextErrors = validateRSVP({ name: primaryName, attendance, guestNames: activeGuestNames, partnerName: activeGuestNames[1]?.trim() || '', declineConfirmed });
     setErrors(nextErrors);
     setSubmitError('');
 
@@ -100,8 +88,7 @@ export function RSVPForm() {
       attendance,
       guestCount: attendance === 'coming' ? guestCount : 0,
       guestNames: attendance === 'coming' ? activeGuestNames.map((guestName) => guestName.trim()) : [],
-      extraGuestNames: finalExtra || undefined,
-      partnerName: undefined,
+      partnerName: attendance === 'coming' && activeGuestNames[1] ? activeGuestNames[1].trim() : undefined,
       submittedAt: new Date().toISOString(),
       userAgent: typeof navigator === 'undefined' ? undefined : navigator.userAgent,
     };
@@ -158,7 +145,7 @@ export function RSVPForm() {
           {attendance === 'coming' ? (
             <div className="rounded-[1.35rem] border border-white/16 bg-white/6 p-4">
               <p className="text-center text-sm font-semibold uppercase tracking-[0.14em] text-lavender-soft">Қонақ саны</p>
-              <div className="mt-4 grid grid-cols-3 gap-2" role="group" aria-label="Қонақ саны">
+              <div className="mt-4 grid grid-cols-2 gap-2" role="group" aria-label="Қонақ саны">
                 {guestCountOptions.map((option) => (
                   <label
                     key={option.value}
@@ -178,10 +165,8 @@ export function RSVPForm() {
                     <span className="text-lavender-soft" aria-hidden="true">
                       {option.value === 1 ? (
                         <PersonIcon className="h-6 w-6" />
-                      ) : option.value === 2 ? (
-                        <PeopleIcon count={2} className="h-8 w-8" />
                       ) : (
-                        <PeopleIcon count={3} className="h-10 w-10" />
+                        <PeopleIcon count={2} className="h-8 w-8" />
                       )}
                     </span>
                     <span className="mt-2 text-sm font-semibold">{option.label}</span>
@@ -191,7 +176,7 @@ export function RSVPForm() {
               </div>
 
               <div className="mt-4 space-y-3">
-                {guestNames.slice(0, guestCount === '3plus' ? 2 : (guestCount as number)).map((guestName, index) => (
+                {guestNames.slice(0, guestCount).map((guestName, index) => (
                   <div key={index}>
                     <label className="block text-sm font-semibold tracking-[0.08em] text-white/82" htmlFor={`guest-name-${index}`}>
                       {index + 1}-қонақтың есімі
@@ -199,7 +184,7 @@ export function RSVPForm() {
                     <input
                       id={`guest-name-${index}`}
                       className="rsvp-input mt-2 px-2 py-3 text-base"
-                      placeholder={index === 0 ? 'Мысалы: Айгүл' : 'Есімі'}
+                      placeholder={index === 0 ? 'Мысалы: Айгүл' : index === 1 ? 'Жұбайыңыздың есімі' : 'Есімі'}
                       type="text"
                       value={guestName}
                       onChange={(event) => handleGuestNameChange(index, event.currentTarget.value)}
@@ -207,21 +192,6 @@ export function RSVPForm() {
                     {errors.guestNames?.[index] ? <p className="mt-2 text-sm text-lavender-soft">{errors.guestNames[index]}</p> : null}
                   </div>
                 ))}
-                {guestCount === '3plus' ? (
-                  <div>
-                    <label className="block text-sm font-semibold tracking-[0.08em] text-white/82" htmlFor="extra-guests">
-                      Қалған қонақтардың есімдері
-                    </label>
-                    <input
-                      id="extra-guests"
-                      className="rsvp-input mt-2 px-2 py-3 text-base"
-                      placeholder="Мысалы: Динара, Айдос, Айзере"
-                      type="text"
-                      value={extraGuestNames}
-                      onChange={(event) => setExtraGuestNames(event.currentTarget.value)}
-                    />
-                  </div>
-                ) : null}
               </div>
             </div>
           ) : null}

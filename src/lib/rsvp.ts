@@ -3,9 +3,8 @@ export type Attendance = 'coming' | 'with_partner' | 'not_coming';
 export type RSVPSubmission = {
   name: string;
   attendance: Attendance;
-  guestCount?: number | '3plus';
+  guestCount?: number;
   guestNames?: string[];
-  extraGuestNames?: string;
   partnerName?: string;
   submittedAt: string;
   userAgent?: string;
@@ -38,10 +37,9 @@ type ValidateRSVPInput = {
   guestNames?: string[];
   partnerName: string;
   declineConfirmed: boolean;
-  extraGuestNames?: string;
 };
 
-export function validateRSVP({ name, attendance, guestNames = [], partnerName, declineConfirmed, extraGuestNames }: ValidateRSVPInput): RSVPErrors {
+export function validateRSVP({ name, attendance, guestNames = [], partnerName, declineConfirmed }: ValidateRSVPInput): RSVPErrors {
   const errors: RSVPErrors = {};
 
   if (attendance === 'coming') {
