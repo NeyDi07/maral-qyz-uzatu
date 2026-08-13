@@ -1,18 +1,34 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
+const SITE_URL = 'https://maral-qyz-uzatu.vercel.app';
+const OG_IMAGE = `${SITE_URL}/media/photos/Марал_1.png`;
+
 export const metadata: Metadata = {
   title: 'Марал | Қыз ұзату',
-  description: 'Маралдың қыз ұзату тойына арналған шақыру сайты.',
+  description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 4 қазан 2026 ж. Aisha мейрамханасы.',
   applicationName: 'Марал Қыз ұзату',
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     title: 'Марал | Қыз ұзату',
-    description: 'Маралдың қыз ұзату тойына арналған шақыру сайты.',
+    description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 4 қазан 2026 ж. Aisha мейрамханасы.',
     type: 'website',
     locale: 'kk_KZ',
+    siteName: 'Марал Қыз ұзату',
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: 'Марал Қыз ұзату — шақыру',
+      },
+    ],
   },
-  other: {
-    'google-fonts': '',
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Марал | Қыз ұзату',
+    description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 4 қазан 2026 ж.',
+    images: [OG_IMAGE],
   },
 };
 
