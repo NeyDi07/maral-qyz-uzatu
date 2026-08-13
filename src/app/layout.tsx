@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 const SITE_URL = 'https://maral-qyz-uzatu.vercel.app';
-const OG_IMAGE = `${SITE_URL}/media/photos/Марал_1.png`;
+const OG_IMAGE = `${SITE_URL}/og`;
 
 export const metadata: Metadata = {
   title: 'Марал | Қыз ұзату',
