@@ -1,0 +1,372 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #f6efe7;
+  --lavender-soft: #c8add4;
+  --lavender: #9f74b4;
+  --plum: #4a244f;
+  --gold: #c89a35;
+  --maroon: #7e1f29;
+  --ink: #181012;
+  --font-display: 'Playfair Display';
+  --font-body: 'Literata';
+  --font-number: Georgia, 'Times New Roman', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+  background: #080506;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  color: white;
+  font-family: var(--font-body), Georgia, 'Times New Roman', serif;
+  background: #080506;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.audio-range {
+  height: 0.12rem;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 999px;
+  background: rgba(200, 173, 212, 0.6);
+  outline: none;
+}
+
+.audio-range::-webkit-slider-thumb {
+  width: 0.46rem;
+  height: 0.46rem;
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  background: var(--lavender-soft);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.audio-range::-moz-range-thumb {
+  width: 0.46rem;
+  height: 0.46rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--lavender-soft);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.player-side-button {
+  display: inline-flex;
+  width: 1.6rem;
+  height: 1.6rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(200, 173, 212, 0.25);
+  border-radius: 999px;
+  color: white;
+  background: rgba(200, 173, 212, 0.1);
+  box-shadow: none;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.player-side-button:hover {
+  background: rgba(200, 173, 212, 0.2);
+  border-color: rgba(200, 173, 212, 0.4);
+}
+
+.player-main-button {
+  position: relative;
+  display: inline-flex;
+  width: 2.2rem;
+  height: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  color: #1c1111;
+  background: white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  transition: background 160ms ease;
+}
+
+.player-main-button:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.player-heart,
+.player-pause {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+.player-heart {
+  color: var(--lavender);
+  transform: scale(1);
+}
+
+.player-heart svg {
+  display: block;
+  width: 1.02rem;
+  height: 1.02rem;
+  transform: translateY(0.01rem);
+}
+
+.player-main-button.is-playing .player-heart {
+  opacity: 0;
+  transform: scale(0.55) rotate(-18deg);
+}
+
+.player-pause {
+  gap: 0.22rem;
+  opacity: 0;
+  transform: scale(0.55) rotate(12deg);
+}
+
+.player-pause span {
+  display: block;
+  width: 0.22rem;
+  height: 0.74rem;
+  border-radius: 999px;
+  background: #1c1111;
+}
+
+.player-main-button.is-playing .player-pause {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.hero-slow-pan {
+  transform: none;
+}
+
+.reveal-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal-card::before {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+  transform: translateX(-120%);
+  animation: card-sheen 8s ease-in-out infinite;
+}
+
+.countdown-tile {
+  position: relative;
+  overflow: hidden;
+}
+
+.countdown-tile::after {
+  position: absolute;
+  inset: auto 18% 0;
+  height: 2px;
+  content: '';
+  background: linear-gradient(90deg, transparent, var(--lavender-soft), transparent);
+  opacity: 0.75;
+}
+
+@keyframes hero-pan {
+  from {
+    transform: scale(1.02) translate3d(-0.35rem, -0.25rem, 0);
+  }
+
+  to {
+    transform: scale(1.08) translate3d(0.35rem, 0.25rem, 0);
+  }
+}
+
+@keyframes card-sheen {
+  0%,
+  58% {
+    transform: translateX(-120%);
+  }
+
+  76%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body::before {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  content: '';
+  opacity: 0.08;
+  background-image: radial-gradient(circle at center, rgba(255,255,255,0.55) 0.7px, transparent 0.8px);
+  background-size: 4px 4px;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  color: white;
+  background: var(--plum);
+}
+
+@layer components {
+  .section-kicker {
+    @apply text-sm uppercase tracking-[0.28em] text-lavender-soft;
+  }
+
+  .section-title {
+    @apply mt-4 font-display text-4xl italic leading-tight text-white;
+  }
+
+  .info-card {
+    @apply rounded-[1.7rem] border border-white/80 bg-white/60 px-4 py-7 text-center shadow-soft backdrop-blur;
+  }
+}
+
+.invite-shell {
+  position: relative;
+  overflow: hidden;
+  background-color: #12080d;
+  background-image:
+    linear-gradient(180deg, rgba(8,5,6,0.04), rgba(8,5,6,0.18) 42%, rgba(8,5,6,0.24) 100%),
+    url('/media/photos/Марал2.png'),
+    url('/media/photos/Марал3.png'),
+    url('/media/photos/Марал_1.png'),
+    url('/media/photos/Марал2.png'),
+    url('/media/photos/Марал3.png'),
+    url('/media/photos/Марал_1.png'),
+    url('/media/photos/Марал2.png'),
+    url('/media/photos/Марал3.png'),
+    url('/media/photos/Марал_1.png'),
+    url('/media/photos/Марал2.png');
+  background-position:
+    center top,
+    center calc(100vh + 0px),
+    center calc(100vh + 850px),
+    center calc(100vh + 1700px),
+    center calc(100vh + 2340px),
+    center calc(100vh + 3190px),
+    center calc(100vh + 4040px),
+    center calc(100vh + 4680px),
+    center calc(100vh + 5530px),
+    center calc(100vh + 6380px),
+    center calc(100vh + 7020px);
+  background-repeat: no-repeat;
+  background-size: auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto;
+}
+
+.invite-shell::before {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  max-width: 480px;
+  margin: auto;
+  content: '';
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.02), rgba(24,8,28,0.12) 18%, rgba(24,8,28,0.12) 82%, rgba(0,0,0,0.02)),
+    radial-gradient(circle at 50% 35%, rgba(200,173,212,0.08), transparent 40%);
+}
+
+.section-panel {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.02), rgba(24,8,28,0.13) 20%, rgba(24,8,28,0.13) 80%, rgba(0,0,0,0.02)),
+    linear-gradient(180deg, rgba(200,173,212,0.05), rgba(0,0,0,0.08));
+}
+
+.script-heading {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3rem, 12vw, 4.4rem);
+  font-style: italic;
+  line-height: 0.95;
+  color: white;
+  text-shadow: 0 4px 18px rgba(0,0,0,0.55), 0 0 24px rgba(200,173,212,0.22);
+}
+
+.font-number {
+  font-family: var(--font-number);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
+  font-style: normal;
+}
+
+.ornament-mask {
+  mask: url('/media/photos/длинный_ою.png') center / contain no-repeat;
+  -webkit-mask: url('/media/photos/длинный_ою.png') center / contain no-repeat;
+}
+
+.heart-date {
+  position: relative;
+  isolation: isolate;
+}
+
+.dark-info-card {
+  border: 1px solid rgba(200,173,212,0.3);
+  background: rgba(35,15,39,0.24);
+  padding: 1.6rem 0.85rem;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.22);
+  backdrop-filter: blur(5px);
+}
+
+.heart-ornament-mask {
+  mask: url('/media/photos/ою_в_виде_сердечко.png') center / contain no-repeat;
+  -webkit-mask: url('/media/photos/ою_в_виде_сердечко.png') center / contain no-repeat;
+}
+
+.main-ornament-mask {
+  mask: url('/media/photos/квадратный_основной_ою.png') center / contain no-repeat;
+  -webkit-mask: url('/media/photos/квадратный_основной_ою.png') center / contain no-repeat;
+}
+
+.opening-card {
+  animation: opening-card-in 520ms ease both;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+@keyframes opening-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

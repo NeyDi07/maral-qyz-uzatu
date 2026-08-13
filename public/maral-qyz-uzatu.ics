@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Maral Qyz Uzatu//Invitation//KK
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:maral-qyz-uzatu-20261004T130000Z@example.local
+DTSTAMP:20260813T000000Z
+DTSTART:20261004T130000Z
+DTEND:20261004T180000Z
+SUMMARY:Марал - Қыз ұзату
+LOCATION:Aisha мейрамханасы, Өскемен қаласы, Виноградов көшесі, 33
+DESCRIPTION:Маралдың қыз ұзату тойы. Той иелері: Дәурен - Римма.
+END:VEVENT
+END:VCALENDAR
