@@ -1,57 +1,62 @@
-# Google Sheets RSVP Setup
+# Google Sheets RSVP Setup (Обновлённая версия с Дашбордом)
 
-This project sends RSVP submissions to a Google Sheet through a Google Apps Script Web App endpoint.
+## Быстрая инструкция
 
-## Sheet Columns
+### Шаг 1. Открой Apps Script
 
-Create these columns in the first row:
+Открой таблицу → **Расширения** → **Apps Script**
 
-```text
-Submitted At | Name | Attendance | Partner Name | User Agent
+### Шаг 2. Замени код
+
+1. Удали ВЕСЬ код, который там есть
+2. Открой файл `google-apps-script.js` (лежит в корне проекта)
+3. Скопируй ВСЁ содержимое и вставь в редактор
+4. Нажми **Ctrl+S** (Сохранить)
+
+### Шаг 3. Настрой таблицу
+
+В редакторе Apps Script:
+1. В выпадающем списке функций выбери `setupDashboard`
+2. Нажми кнопку ▶ **Выполнить**
+3. Разреши доступ (Google запросит — нажми "Разрешить", выбери свой аккаунт, затем "Дополнительные" → "Перейти к...")
+4. После выполнения появится сообщение "Таблица готова!"
+
+### Шаг 4. Разверни как веб-приложение
+
+1. Нажми **Развернуть** → **Новое развертывание**
+2. Тип: **Веб-приложение**
+3. Выполнять от: **Я**
+4. У кого есть доступ: **Все**
+5. Нажми **Развернуть**
+6. Скопируй URL (заканчивается на `/exec`)
+
+### Шаг 5. Обнови переменную
+
+1. Замени URL в `.env.local` (локально):
+```
+NEXT_PUBLIC_RSVP_ENDPOINT=НОВЫЙ_URL_ИЗ_ШАГА_4
 ```
 
-## Apps Script Code
+2. Обнови ту же переменную на Vercel:
+   - Зайди на https://vercel.com/dashboard → проект → Settings → Environment Variables
+   - Обнови `NEXT_PUBLIC_RSVP_ENDPOINT` новым URL
+   - Redeploy
 
-Use this script in `Extensions -> Apps Script`:
+## Что получается
 
-```javascript
-function doPost(e) {
-  try {
-    var data = JSON.parse(e.postData.contents);
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+После настройки в Google Таблице будет ДВА листа:
 
-    sheet.appendRow([
-      data.submittedAt || new Date().toISOString(),
-      data.name || '',
-      data.attendance || '',
-      data.partnerName || '',
-      data.userAgent || ''
-    ]);
+### Лист «Ответы» — таблица с данными
+| Дата и время | Есім | Статус | Қонақ саны | Барлық есімдер |
+|---|---|---|---|---|
+| 04.10.2026 18:00 | Айгүл | Келеді | 3 | Айгүл, Бауыржан, Динара |
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ success: true }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ success: false, error: error.message }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-```
+- Цветовое форматирование: зелёный = Келеді, синий = Жұбайымен, красный = Келмейді
 
-## Deployment
+### Лист «Дашборд» — красивая статистика
+- Общее количество ответивших
+- Общее количество гостей (которые придут)
+- Разбивка: Келеді / Жұбайымен / Келмейді
+- Поимённые списки по категориям
 
-1. Click `Deploy -> New deployment`.
-2. Select `Web app`.
-3. Set `Execute as` to `Me`.
-4. Set `Who has access` to `Anyone`.
-5. Copy the Web App URL ending with `/exec`.
-6. Add it to `.env.local` as `NEXT_PUBLIC_RSVP_ENDPOINT`.
-
-## Vercel
-
-Add the same variable in Vercel Project Settings:
-
-```text
-NEXT_PUBLIC_RSVP_ENDPOINT=https://script.google.com/macros/s/.../exec
-```
+Дашборд обновляется АВТОМАТИЧЕСКИ при каждом новом ответе.
