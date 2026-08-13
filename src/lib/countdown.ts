@@ -6,7 +6,7 @@ export type CountdownParts = {
   isPast: boolean;
 };
 
-export const eventStartDate = new Date('2026-10-04T18:00:00+05:00');
+export const eventStartDate = new Date('2026-10-04T17:00:00+05:00');
 
 type GetCountdownPartsInput = {
   now: Date;

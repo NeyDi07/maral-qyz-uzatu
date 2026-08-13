@@ -10,6 +10,14 @@ type FinalSceneProps = {
 };
 
 function getFinalCopy(submission: RSVPSubmission) {
+  if (submission.attendance === 'coming' && submission.guestNames && submission.guestNames.length > 1) {
+    return {
+      title: 'Жауабыңыз қабылданды!',
+      body: `${submission.guestNames.join(', ')}, сіздерді асыға күтеміз.`,
+      detail: `${submission.guestNames.length} қонаққа арнайы орын сақталды.`,
+    };
+  }
+
   if (submission.attendance === 'with_partner') {
     return {
       title: 'Тамаша!',

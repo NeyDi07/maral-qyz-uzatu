@@ -1,8 +1,7 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CalendarCard } from '@/components/CalendarCard';
 import { Countdown } from '@/components/Countdown';
 import { DressCode } from '@/components/DressCode';
 import { Hero } from '@/components/Hero';
@@ -59,7 +58,7 @@ export function InvitationExperience() {
     void playAudio(true);
     setTimeout(() => {
       setIsOpened(true);
-    }, 920);
+    }, 1280);
   }
 
   function handleToggleAudio() {
@@ -123,9 +122,7 @@ export function InvitationExperience() {
         onPlay={() => setIsPlaying(true)}
         onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
       />
-      <RotatingOrnament className="absolute -right-20 top-[92vh] z-20" opacity={0.86} size={168} />
-      <RotatingOrnament className="absolute -left-24 top-[205vh] z-20" opacity={0.72} size={176} />
-      <RotatingOrnament className="absolute -right-16 top-[330vh] z-20" opacity={0.76} size={148} />
+      <FloatingOrnament />
 
       <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }}>
         {isOpened && (
@@ -139,20 +136,8 @@ export function InvitationExperience() {
             onToggle={handleToggleAudio}
           />
         )}
-        <Hero audioMessage={audioMessage} />
-        <InvitationText />
-        <TimeDetails />
-        <CalendarCard />
-        <LocationCard />
-        <Countdown />
-        <DressCode />
-        <RSVPForm />
-        <ScrollSection ariaLabel="Той иелері" className="section-panel px-5 pb-20 pt-14 text-center" direction="left">
-          <Ornament className="mb-8" />
-          <p className="mx-auto max-w-sm text-xl leading-9 text-white/82">Келіңіздер, қуанышымыздың куәсі болыңыздар!</p>
-          <p className="mt-10 text-sm uppercase tracking-[0.28em] text-white/62">Құрметпен, той иелері</p>
-          <p className="mt-4 font-display text-5xl italic text-white">{invitation.hosts}</p>
-        </ScrollSection>
+        <MemoHero audioMessage={audioMessage} />
+        <InvitationSections />
       </motion.div>
       <AnimatePresence>
         {!isOpened && (
@@ -168,3 +153,32 @@ export function InvitationExperience() {
     </div>
   );
 }
+
+const MemoHero = memo(Hero);
+
+const FloatingOrnament = memo(function FloatingOrnament() {
+  return <RotatingOrnament className="absolute -right-[92px] top-[86vh] z-20" opacity={0.92} size={185} />;
+});
+
+const InvitationSections = memo(function InvitationSections() {
+  return (
+    <>
+      <InvitationText />
+      <TimeDetails />
+      <LocationCard />
+      <div className="visual-block visual-block-details flex flex-col justify-center">
+        <Countdown />
+        <DressCode />
+      </div>
+      <div className="visual-block visual-block-rsvp flex flex-col justify-center">
+        <RSVPForm />
+        <ScrollSection ariaLabel="Той иелері" className="section-panel px-5 pb-12 pt-4 text-center" direction="left">
+          <Ornament className="mb-5" />
+          <p className="mx-auto max-w-sm text-xl leading-9 text-white/88">Келіңіздер, қуанышымыздың куәсі болыңыздар!</p>
+          <p className="mt-6 text-sm uppercase tracking-[0.24em] text-white/68">Құрметпен, той иелері</p>
+          <p className="mt-2 font-display text-5xl italic text-white tracking-wide">{invitation.hosts}</p>
+        </ScrollSection>
+      </div>
+    </>
+  );
+});

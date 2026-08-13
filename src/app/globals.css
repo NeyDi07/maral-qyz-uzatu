@@ -6,13 +6,14 @@
   --cream: #f6efe7;
   --lavender-soft: #c8add4;
   --lavender: #9f74b4;
+  --lavender-deep: #7b2cbf;
   --plum: #4a244f;
   --gold: #c89a35;
   --maroon: #7e1f29;
   --ink: #181012;
   --font-display: 'Playfair Display';
   --font-body: 'Literata';
-  --font-number: Georgia, 'Times New Roman', serif;
+  --font-number: 'Cormorant Garamond', 'Playfair Display', 'Times New Roman', serif;
 }
 
 * {
@@ -244,7 +245,7 @@ main {
 
 @layer components {
   .section-kicker {
-    @apply text-sm uppercase tracking-[0.28em] text-lavender-soft;
+    @apply text-sm uppercase tracking-[0.28em] text-white/60;
   }
 
   .section-title {
@@ -260,53 +261,58 @@ main {
   position: relative;
   overflow: hidden;
   background-color: #12080d;
-  background-image:
-    linear-gradient(180deg, rgba(8,5,6,0.04), rgba(8,5,6,0.18) 42%, rgba(8,5,6,0.24) 100%),
-    url('/media/photos/Марал2.png'),
-    url('/media/photos/Марал3.png'),
-    url('/media/photos/Марал_1.png'),
-    url('/media/photos/Марал2.png'),
-    url('/media/photos/Марал3.png'),
-    url('/media/photos/Марал_1.png'),
-    url('/media/photos/Марал2.png'),
-    url('/media/photos/Марал3.png'),
-    url('/media/photos/Марал_1.png'),
-    url('/media/photos/Марал2.png');
-  background-position:
-    center top,
-    center calc(100vh + 0px),
-    center calc(100vh + 850px),
-    center calc(100vh + 1700px),
-    center calc(100vh + 2340px),
-    center calc(100vh + 3190px),
-    center calc(100vh + 4040px),
-    center calc(100vh + 4680px),
-    center calc(100vh + 5530px),
-    center calc(100vh + 6380px),
-    center calc(100vh + 7020px);
-  background-repeat: no-repeat;
-  background-size: auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto, 100% auto;
 }
 
 .invite-shell::before {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  max-width: 480px;
-  margin: auto;
-  content: '';
-  background:
-    linear-gradient(90deg, rgba(0,0,0,0.02), rgba(24,8,28,0.12) 18%, rgba(24,8,28,0.12) 82%, rgba(0,0,0,0.02)),
-    radial-gradient(circle at 50% 35%, rgba(200,173,212,0.08), transparent 40%);
+  content: none;
+}
+
+.visual-block {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background-color: #12080d;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  isolation: isolate;
+}
+
+.visual-block-invitation {
+  background-image: url('/media/photos/Марал2.png');
+  background-position: center 38%;
+}
+
+.visual-block-schedule {
+  background-image: url('/media/photos/Марал3.png');
+  background-position: center 42%;
+}
+
+.visual-block-location {
+  background-image: url('/media/photos/Марал11.png');
+  background-position: center 34%;
+}
+
+.visual-block-details {
+  background-image: url('/media/photos/Марал2.png');
+  background-position: center 46%;
+}
+
+.visual-block-rsvp {
+  background-image: url('/media/photos/Марал3.png');
+  background-position: center 44%;
+}
+
+.visual-block::after {
+  content: none;
 }
 
 .section-panel {
   position: relative;
   overflow: hidden;
   color: white;
-  background:
-    linear-gradient(90deg, rgba(0,0,0,0.02), rgba(24,8,28,0.13) 20%, rgba(24,8,28,0.13) 80%, rgba(0,0,0,0.02)),
-    linear-gradient(180deg, rgba(200,173,212,0.05), rgba(0,0,0,0.08));
+  background-color: transparent;
+  z-index: 2;
 }
 
 .script-heading {
@@ -336,11 +342,113 @@ main {
 }
 
 .dark-info-card {
-  border: 1px solid rgba(200,173,212,0.3);
-  background: rgba(35,15,39,0.24);
-  padding: 1.6rem 0.85rem;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.22);
-  backdrop-filter: blur(5px);
+  border: 1px solid rgba(200,173,212,0.34);
+  background: linear-gradient(180deg, rgba(48,22,58,0.38), rgba(10,5,13,0.42));
+  padding: 1rem 0.75rem;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.12);
+  -webkit-backdrop-filter: blur(7px) saturate(115%);
+  backdrop-filter: blur(7px) saturate(115%);
+}
+
+.glass-panel {
+  border: 1px solid rgba(200,173,212,0.35);
+  background: linear-gradient(180deg, rgba(42,18,50,0.34), rgba(7,4,10,0.46));
+  box-shadow: 0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.13);
+  -webkit-backdrop-filter: blur(7px) saturate(112%);
+  backdrop-filter: blur(7px) saturate(112%);
+}
+
+.glass-button {
+  border: 1px solid rgba(200,173,212,0.42);
+  background: linear-gradient(180deg, rgba(123,44,191,0.32), rgba(28,10,38,0.38));
+  box-shadow: 0 18px 48px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.16);
+  -webkit-backdrop-filter: blur(8px) saturate(118%);
+  backdrop-filter: blur(8px) saturate(118%);
+}
+
+.glass-button:hover {
+  background: linear-gradient(180deg, rgba(123,44,191,0.42), rgba(34,12,46,0.46));
+}
+
+.rsvp-input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.55);
+  border-radius: 0.55rem 0.55rem 0 0;
+  background: rgba(8,5,10,0.42);
+  color: white;
+  outline: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.rsvp-input::placeholder {
+  color: rgba(255,255,255,0.46);
+}
+
+.rsvp-input:focus {
+  border-bottom-color: var(--lavender-soft);
+  background: rgba(8,5,10,0.56);
+}
+
+.text-backdrop {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.28);
+  -webkit-backdrop-filter: blur(4px) saturate(105%);
+  backdrop-filter: blur(4px) saturate(105%);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.16);
+}
+
+.rsvp-card {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: linear-gradient(180deg, rgba(18,8,13,0.44), rgba(10,4,7,0.36));
+  box-shadow: 0 22px 70px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.14);
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  backdrop-filter: blur(8px) saturate(110%);
+}
+
+.guest-count-card {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.guest-count-card-active {
+  border-color: rgba(200,173,212,0.7);
+  background: rgba(200,173,212,0.18);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.14);
+}
+
+.black-glass-btn {
+  border: 1px solid rgba(255,255,255,0.28);
+  background: linear-gradient(180deg, rgba(18,9,23,0.46), rgba(6,3,8,0.38));
+  box-shadow: 0 14px 40px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.14);
+  -webkit-backdrop-filter: blur(7px) saturate(108%);
+  backdrop-filter: blur(7px) saturate(108%);
+}
+
+.black-glass-btn:hover {
+  background: linear-gradient(180deg, rgba(28,14,36,0.52), rgba(10,5,14,0.44));
+}
+
+.square-tile {
+  position: relative;
+  padding: 0;
+  aspect-ratio: 1 / 1;
+}
+
+.square-tile::before {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
+.square-tile > * {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .heart-ornament-mask {

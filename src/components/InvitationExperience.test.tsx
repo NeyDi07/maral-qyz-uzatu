@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { InvitationExperience } from './InvitationExperience';
 
-const ANIMATION_TIMEOUT = 1200;
+const ANIMATION_TIMEOUT = 1500;
 
 describe('InvitationExperience audio opening', () => {
   afterEach(() => {

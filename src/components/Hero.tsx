@@ -18,7 +18,8 @@ export function Hero({ audioMessage = '' }: HeroProps) {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="none"
+        poster={invitation.heroImage}
         aria-hidden="true"
       />
       <div className="absolute inset-0 -z-20 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.04)_52%,rgba(0,0,0,0.54)_100%)]" />
@@ -40,9 +41,9 @@ export function Hero({ audioMessage = '' }: HeroProps) {
           {invitation.eventName}
         </p></Reveal>
 
-        <Reveal direction="down" delay={0.18}><div className="main-ornament-mask mx-auto my-5 h-16 w-16 bg-lavender-soft shadow-[0_0_18px_rgba(200,173,212,0.4)]" aria-hidden="true" /></Reveal>
+        <Reveal direction="down" delay={0.18}><div className="main-ornament-mask mx-auto my-6 h-20 w-20 bg-[var(--lavender-deep)] drop-shadow-[0_0_22px_rgba(123,63,160,0.55)]" aria-hidden="true" /></Reveal>
 
-        <Reveal direction="up" delay={0.22}><p className="font-number text-2xl tracking-[0.22em] text-lavender-soft">{invitation.heroDate}</p></Reveal>
+        <Reveal direction="up" delay={0.22}><p className="font-number text-3xl tracking-[0.22em] text-lavender-soft">{invitation.heroDate}</p></Reveal>
         {audioMessage ? <Reveal direction="right" delay={0.26}><p className="mx-auto mt-4 max-w-xs text-sm leading-6 text-white/82">{audioMessage}</p></Reveal> : null}
       </div>
     </ScrollSection>

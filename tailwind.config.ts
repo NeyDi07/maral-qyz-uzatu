@@ -8,6 +8,7 @@ const config: Config = {
         cream: 'var(--cream)',
         'lavender-soft': 'var(--lavender-soft)',
         lavender: 'var(--lavender)',
+        'lavender-deep': 'var(--lavender-deep)',
         plum: 'var(--plum)',
         gold: 'var(--gold)',
         maroon: 'var(--maroon)',

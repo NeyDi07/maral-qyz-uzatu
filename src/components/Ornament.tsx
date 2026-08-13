@@ -4,11 +4,11 @@ type OrnamentProps = {
 };
 
 export function Ornament({ tone = 'lavender', className = '' }: OrnamentProps) {
-  const color = tone === 'gold' ? 'bg-lavender-soft' : 'bg-lavender-soft';
+  const color = tone === 'gold' ? 'bg-[var(--lavender-soft)]' : 'bg-[var(--lavender-deep)]';
 
   return (
     <div className={`flex justify-center ${className}`} aria-hidden="true">
-      <div className={`main-ornament-mask h-24 w-24 ${color} drop-shadow-[0_0_18px_rgba(200,173,212,0.35)]`} />
+      <div className={`main-ornament-mask h-24 w-24 ${color} drop-shadow-[0_0_22px_rgba(123,63,160,0.5)]`} />
     </div>
   );
 }

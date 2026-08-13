@@ -3,6 +3,9 @@ export type Attendance = 'coming' | 'with_partner' | 'not_coming';
 export type RSVPSubmission = {
   name: string;
   attendance: Attendance;
+  guestCount?: number | '3plus';
+  guestNames?: string[];
+  extraGuestNames?: string;
   partnerName?: string;
   submittedAt: string;
   userAgent?: string;
@@ -11,6 +14,7 @@ export type RSVPSubmission = {
 export type RSVPErrors = {
   name?: string;
   attendance?: string;
+  guestNames?: string[];
   partnerName?: string;
   declineConfirmation?: string;
 };
@@ -18,13 +22,8 @@ export type RSVPErrors = {
 export const rsvpOptions: { value: Attendance; label: string; helper: string }[] = [
   {
     value: 'coming',
-    label: 'Әрине, келемін',
-    helper: 'Қуанышымызға ортақ боласыз.',
-  },
-  {
-    value: 'with_partner',
-    label: 'Жұбайыммен бірге келемін',
-    helper: 'Екеуіңізге арнайы орын дайындаймыз.',
+    label: 'Иә, міндетті түрде келемін',
+    helper: 'Қонақ санын таңдап, есімдерді жазыңыз.',
   },
   {
     value: 'not_coming',
@@ -36,14 +35,21 @@ export const rsvpOptions: { value: Attendance; label: string; helper: string }[]
 type ValidateRSVPInput = {
   name: string;
   attendance: Attendance | '';
+  guestNames?: string[];
   partnerName: string;
   declineConfirmed: boolean;
+  extraGuestNames?: string;
 };
 
-export function validateRSVP({ name, attendance, partnerName, declineConfirmed }: ValidateRSVPInput): RSVPErrors {
+export function validateRSVP({ name, attendance, guestNames = [], partnerName, declineConfirmed, extraGuestNames }: ValidateRSVPInput): RSVPErrors {
   const errors: RSVPErrors = {};
 
-  if (!name.trim()) {
+  if (attendance === 'coming') {
+    const guestNameErrors = guestNames.map((guestName, index) => (guestName.trim() ? '' : `${index + 1}-қонақтың есімін жазыңыз.`));
+    if (guestNameErrors.some(Boolean)) {
+      errors.guestNames = guestNameErrors;
+    }
+  } else if (attendance !== 'not_coming' && !name.trim()) {
     errors.name = 'Есіміңізді жазыңыз.';
   }
 

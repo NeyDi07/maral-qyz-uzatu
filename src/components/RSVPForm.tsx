@@ -6,10 +6,41 @@ import { hasRSVPErrors, rsvpOptions, submitRSVP, validateRSVP } from '@/lib/rsvp
 import { FinalScene } from './FinalScene';
 import { ScrollSection } from './ScrollSection';
 
+type GuestCount = 1 | 2 | '3plus';
+
+const PersonIcon = ({ className = '' }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8" />
+    <path d="M4 22c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+
+const PeopleIcon = ({ count, className = '' }: { count: number; className?: string }) => (
+  <svg className={className} viewBox="0 0 36 24" fill="none" aria-hidden="true">
+    {Array.from({ length: count }, (_, i) => {
+      const cx = i === 0 ? 10 : i === 1 ? 26 : 18;
+      const cy = i === 2 ? 14 : 7;
+      return (
+        <g key={i}>
+          <circle cx={cx} cy={cy} r="3.8" stroke="currentColor" strokeWidth="1.7" />
+          <path d={`M${cx - 4} ${cy + 10}c0-2.2 1.8-4 4-4s4 1.8 4 4`} stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+        </g>
+      );
+    })}
+  </svg>
+);
+
+const guestCountOptions: { value: GuestCount; label: string; helper: string }[] = [
+  { value: 1, label: '1 қонақ', helper: 'Өзім барамын' },
+  { value: 2, label: '2 қонақ', helper: 'Екеуміз барамыз' },
+  { value: '3plus', label: '3+ қонақ', helper: 'Отбасыммен келемін' },
+];
+
 export function RSVPForm() {
-  const [name, setName] = useState('');
   const [attendance, setAttendance] = useState<Attendance | ''>('');
-  const [partnerName, setPartnerName] = useState('');
+  const [guestCount, setGuestCount] = useState<GuestCount>(1);
+  const [guestNames, setGuestNames] = useState<string[]>(['']);
+  const [extraGuestNames, setExtraGuestNames] = useState('');
   const [declineConfirmed, setDeclineConfirmed] = useState(false);
   const [errors, setErrors] = useState<RSVPErrors>({});
   const [submission, setSubmission] = useState<RSVPSubmission | null>(null);
@@ -20,17 +51,43 @@ export function RSVPForm() {
     setAttendance(value);
     setErrors({});
 
-    if (value !== 'with_partner') {
-      setPartnerName('');
+    if (value === 'coming') {
+      setGuestCount(1);
+      setGuestNames(['']);
+      setExtraGuestNames('');
+      setDeclineConfirmed(false);
+      return;
     }
 
-    if (value !== 'not_coming') {
-      setDeclineConfirmed(false);
+    if (value === 'not_coming') {
+      setGuestNames(['']);
+      setExtraGuestNames('');
+      return;
     }
   }
 
+  function handleGuestCountChange(value: GuestCount) {
+    setGuestCount(value);
+    setErrors((current) => ({ ...current, guestNames: undefined }));
+    setExtraGuestNames('');
+    if (value === '3plus') {
+      setGuestNames(['', '']);
+    } else {
+      setGuestNames((current) => Array.from({ length: value }, (_, index) => current[index] ?? ''));
+    }
+  }
+
+  function handleGuestNameChange(index: number, value: string) {
+    setGuestNames((current) => current.map((guestName, currentIndex) => (currentIndex === index ? value : guestName)));
+  }
+
   async function handleSubmit() {
-    const nextErrors = validateRSVP({ name, attendance, partnerName, declineConfirmed });
+    const activeGuestNames = attendance === 'coming'
+      ? (guestCount === '3plus' ? guestNames.slice(0, 2) : guestNames.slice(0, guestCount as number))
+      : [];
+    const primaryName = activeGuestNames[0]?.trim() || '';
+    const finalExtra = attendance === 'coming' && guestCount === '3plus' ? extraGuestNames.trim() : undefined;
+    const nextErrors = validateRSVP({ name: primaryName, attendance, guestNames: activeGuestNames, partnerName: '', declineConfirmed, extraGuestNames: finalExtra });
     setErrors(nextErrors);
     setSubmitError('');
 
@@ -39,9 +96,12 @@ export function RSVPForm() {
     }
 
     const nextSubmission: RSVPSubmission = {
-      name: name.trim(),
+      name: attendance === 'coming' ? primaryName : 'Қонақ',
       attendance,
-      partnerName: partnerName.trim() || undefined,
+      guestCount: attendance === 'coming' ? guestCount : 0,
+      guestNames: attendance === 'coming' ? activeGuestNames.map((guestName) => guestName.trim()) : [],
+      extraGuestNames: finalExtra || undefined,
+      partnerName: undefined,
       submittedAt: new Date().toISOString(),
       userAgent: typeof navigator === 'undefined' ? undefined : navigator.userAgent,
     };
@@ -59,35 +119,22 @@ export function RSVPForm() {
   }
 
   return (
-    <ScrollSection ariaLabel="Сауалнама" className="section-panel px-5 py-14">
-      <div className="rounded-[1.8rem] border border-white/22 bg-black/26 px-4 py-10 text-white shadow-[0_22px_70px_rgba(0,0,0,0.32)] backdrop-blur-sm">
+    <ScrollSection ariaLabel="Сауалнама" className="section-panel px-5 pb-6 pt-8">
+      <div className="rsvp-card rounded-[1.8rem] px-4 py-7 text-white">
         <p className="sr-only">Сауалнама</p>
         <h2 className="script-heading text-center">Анкета</h2>
-        <p className="mx-auto mt-4 max-w-xs text-center text-lg leading-8 text-lavender-soft/82">
+        <p className="mx-auto mt-3 max-w-xs text-center text-lg leading-8 text-lavender-soft/82">
           Тойға қатысуыңызды растауыңызды сұраймыз.
         </p>
-        <form className="mt-8 space-y-6" onSubmit={(event) => event.preventDefault()}>
-          <label className="block text-sm font-semibold tracking-[0.08em] text-white/82" htmlFor="guest-name">
-            Есіміңіз
-          </label>
-          <input
-            id="guest-name"
-            className="w-full border-0 border-b border-white/55 bg-transparent px-1 py-4 text-lg text-white outline-none placeholder:text-white/36 focus:border-lavender-soft"
-            name="name"
-            placeholder="Мысалы: Айгүл"
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.currentTarget.value)}
-          />
-          {errors.name ? <p className="-mt-4 text-sm text-lavender-soft">{errors.name}</p> : null}
+        <form className="mt-5 space-y-4" onSubmit={(event) => event.preventDefault()}>
           <div className="space-y-3" role="group" aria-label="Тойға келесіз бе?">
             {rsvpOptions.map((option) => (
               <label
                 key={option.value}
-                 className={`flex cursor-pointer items-start gap-3 rounded-[1.25rem] border px-4 py-4 transition ${
-                   attendance === option.value
-                     ? 'border-lavender-soft/70 bg-lavender-soft/12 text-white shadow-[0_16px_38px_rgba(0,0,0,0.24)]'
-                     : 'border-white/20 bg-black/18 text-white/78'
+                className={`flex cursor-pointer items-start gap-3 rounded-[1.25rem] px-4 py-3 transition ${
+                  attendance === option.value
+                    ? 'border border-white/28 bg-white/16 text-white shadow-[0_16px_38px_rgba(0,0,0,0.2)]'
+                    : 'border border-white/14 bg-white/6 text-white/86'
                 }`}
               >
                 <input
@@ -101,26 +148,81 @@ export function RSVPForm() {
                 />
                 <span>
                   <span className="block font-semibold">{option.label}</span>
-                  <span className="mt-1 block text-sm opacity-70">{option.helper}</span>
+                  <span className="mt-1 block text-sm text-white/74">{option.helper}</span>
                 </span>
               </label>
             ))}
           </div>
           {errors.attendance ? <p className="-mt-3 text-sm text-maroon">{errors.attendance}</p> : null}
-          {attendance === 'with_partner' ? (
-            <div className="rounded-[1.25rem] border border-lavender-soft/28 bg-black/18 px-4 py-3">
-              <label className="block text-sm font-semibold tracking-[0.08em] text-white/82" htmlFor="partner-name">
-                Жұбайыңыздың есімі
-              </label>
-              <input
-                id="partner-name"
-                className="mt-2 w-full border-0 border-b border-white/55 bg-transparent px-1 py-2.5 text-base text-white outline-none placeholder:text-white/36 focus:border-lavender-soft"
-                placeholder="Мысалы: Ерлан"
-                type="text"
-                value={partnerName}
-                onChange={(event) => setPartnerName(event.currentTarget.value)}
-              />
-              {errors.partnerName ? <p className="mt-3 text-sm text-lavender-soft">{errors.partnerName}</p> : null}
+
+          {attendance === 'coming' ? (
+            <div className="rounded-[1.35rem] border border-white/16 bg-white/6 p-4">
+              <p className="text-center text-sm font-semibold uppercase tracking-[0.14em] text-lavender-soft">Қонақ саны</p>
+              <div className="mt-4 grid grid-cols-3 gap-2" role="group" aria-label="Қонақ саны">
+                {guestCountOptions.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`guest-count-card flex cursor-pointer flex-col items-center rounded-[1rem] px-2 py-3 text-center transition ${
+                      guestCount === option.value ? 'guest-count-card-active text-white' : 'text-white/78'
+                    }`}
+                  >
+                    <input
+                      aria-label={option.label}
+                      checked={guestCount === option.value}
+                      className="sr-only"
+                      name="guest-count"
+                      type="radio"
+                      value={option.value}
+                      onChange={() => handleGuestCountChange(option.value)}
+                    />
+                    <span className="text-lavender-soft" aria-hidden="true">
+                      {option.value === 1 ? (
+                        <PersonIcon className="h-6 w-6" />
+                      ) : option.value === 2 ? (
+                        <PeopleIcon count={2} className="h-8 w-8" />
+                      ) : (
+                        <PeopleIcon count={3} className="h-10 w-10" />
+                      )}
+                    </span>
+                    <span className="mt-2 text-sm font-semibold">{option.label}</span>
+                    <span className="mt-1 text-[0.64rem] leading-4 text-white/58">{option.helper}</span>
+                  </label>
+                ))}
+              </div>
+
+              <div className="mt-4 space-y-3">
+                {guestNames.slice(0, guestCount === '3plus' ? 2 : (guestCount as number)).map((guestName, index) => (
+                  <div key={index}>
+                    <label className="block text-sm font-semibold tracking-[0.08em] text-white/82" htmlFor={`guest-name-${index}`}>
+                      {index + 1}-қонақтың есімі
+                    </label>
+                    <input
+                      id={`guest-name-${index}`}
+                      className="rsvp-input mt-2 px-2 py-3 text-base"
+                      placeholder={index === 0 ? 'Мысалы: Айгүл' : 'Есімі'}
+                      type="text"
+                      value={guestName}
+                      onChange={(event) => handleGuestNameChange(index, event.currentTarget.value)}
+                    />
+                    {errors.guestNames?.[index] ? <p className="mt-2 text-sm text-lavender-soft">{errors.guestNames[index]}</p> : null}
+                  </div>
+                ))}
+                {guestCount === '3plus' ? (
+                  <div>
+                    <label className="block text-sm font-semibold tracking-[0.08em] text-white/82" htmlFor="extra-guests">
+                      Қалған қонақтардың есімдері
+                    </label>
+                    <input
+                      id="extra-guests"
+                      className="rsvp-input mt-2 px-2 py-3 text-base"
+                      placeholder="Мысалы: Динара, Айдос, Айзере"
+                      type="text"
+                      value={extraGuestNames}
+                      onChange={(event) => setExtraGuestNames(event.currentTarget.value)}
+                    />
+                  </div>
+                ) : null}
+              </div>
             </div>
           ) : null}
           {attendance === 'not_coming' ? (

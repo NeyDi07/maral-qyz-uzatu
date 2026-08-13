@@ -10,8 +10,8 @@ describe('Home invitation page', () => {
     expect(screen.getAllByText('Қыз ұзату')[0]).toBeInTheDocument();
     expect(screen.getByText('04.10.26')).toBeInTheDocument();
     expect(screen.getByText(/Құрметті ағайын-туыс/)).toBeInTheDocument();
-    expect(screen.getByText('4 қазан 2026 жыл')).toBeInTheDocument();
-    expect(screen.getByText('18:00')).toBeInTheDocument();
+    expect(screen.getByText('қазан, жексенбі')).toBeInTheDocument();
+    expect(screen.getByText('17:00')).toBeInTheDocument();
     expect(screen.getByText('Қазан 2026')).toBeInTheDocument();
     expect(screen.getByText('"Aisha"')).toBeInTheDocument();
     expect(screen.getByText('мейрамханасы')).toBeInTheDocument();
@@ -23,9 +23,8 @@ describe('Home invitation page', () => {
     expect(screen.getByText('Тойға дейін')).toBeInTheDocument();
     expect(screen.getByText('Дресс-код')).toBeInTheDocument();
     expect(screen.getByText('Сауалнама')).toBeInTheDocument();
-    expect(screen.getByLabelText('Есіміңіз')).toBeInTheDocument();
-    expect(screen.getByText('Әрине, келемін')).toBeInTheDocument();
-    expect(screen.getByText('Жұбайыммен бірге келемін')).toBeInTheDocument();
+    expect(screen.queryByLabelText('1-қонақтың есімі')).not.toBeInTheDocument();
+    expect(screen.getByText('Иә, міндетті түрде келемін')).toBeInTheDocument();
     expect(screen.getByText('Өкінішке орай, келе алмаймын')).toBeInTheDocument();
     expect(screen.getByText(/Дәурен - Римма/)).toBeInTheDocument();
   });
