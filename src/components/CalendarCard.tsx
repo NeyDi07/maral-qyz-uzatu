@@ -16,7 +16,7 @@ export function CalendarCard() {
           <span>Қазан</span>
           <span className="font-number">2026</span>
         </div></Reveal>
-        <Reveal direction="down" delay={0.14}><div className="mt-5 grid grid-cols-7 gap-2 rounded-2xl border border-lavender-soft/35 bg-plum/18 p-3 text-white shadow-[0_18px_55px_rgba(0,0,0,0.28)] backdrop-blur-sm">
+        <Reveal direction="down" delay={0.14} noFade><div className="mt-5 grid grid-cols-7 gap-2 rounded-2xl border border-lavender-soft/35 bg-plum/18 p-3 text-white shadow-[0_18px_55px_rgba(0,0,0,0.28)] backdrop-blur-sm">
           {weekdays.map((day) => (
             <div key={day} className="border-b border-white/40 pb-2 text-xs font-semibold tracking-[0.12em] text-white/80">
               {day}
@@ -42,7 +42,7 @@ export function CalendarCard() {
             </div>
           ))}
         </div></Reveal>
-        <Reveal direction="up" delay={0.18}><a
+        <Reveal direction="up" delay={0.18} noFade><a
           className="mt-7 inline-flex rounded-full border border-white/30 bg-white/12 px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white backdrop-blur transition hover:bg-white/20"
           href={invitation.calendarUrl}
           download

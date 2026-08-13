@@ -30,7 +30,7 @@ export function Countdown() {
       <Reveal direction="left" delay={0.05}><h2 className="script-heading">Тойға дейін:</h2></Reveal>
       <div className="mt-5 grid grid-cols-4 gap-2.5">
         {unitLabels.map(([key, label]) => (
-          <Reveal key={key} direction="up" delay={0.08 + unitLabels.findIndex(([unit]) => unit === key) * 0.04}><div className="glass-panel square-tile rounded-2xl w-full text-white">
+          <Reveal key={key} direction="up" delay={0.08 + unitLabels.findIndex(([unit]) => unit === key) * 0.04} noFade><div className="glass-panel square-tile rounded-2xl w-full text-white">
             <div>
               <p className="font-number text-3xl tabular-nums leading-none text-white">{parts[key].toString().padStart(2, '0')}</p>
               <p className="mt-1 text-[0.6rem] uppercase tracking-[0.12em] text-white/62">{label}</p>

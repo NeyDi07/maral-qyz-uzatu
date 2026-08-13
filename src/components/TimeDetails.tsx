@@ -11,12 +11,12 @@ export function TimeDetails() {
       <Reveal direction="down"><div className="ornament-mask mx-auto mb-4 h-14 w-72 max-w-full bg-[var(--lavender-deep)] drop-shadow-[0_0_20px_rgba(123,63,160,0.5)]" /></Reveal>
       <Reveal direction="left" delay={0.04}><h2 className="script-heading">Той салтанаты:</h2></Reveal>
       <div className="mx-auto mt-5 grid w-[76%] max-w-[270px] grid-cols-2 gap-2.5">
-        <Reveal direction="left" delay={0.08}><div className="dark-info-card rounded-xl !px-2 !py-2.5">
+        <Reveal direction="left" delay={0.08} noFade><div className="dark-info-card rounded-xl !px-2 !py-2.5">
           <p className="text-[0.6rem] uppercase tracking-[0.18em] text-lavender-soft">Күні</p>
           <p className="font-number mt-1 text-2xl text-white">04</p>
           <p className="mt-0.5 text-[0.65rem] text-white/62">қазан, жексенбі</p>
         </div></Reveal>
-        <Reveal direction="right" delay={0.12}><div className="dark-info-card rounded-xl !px-2 !py-2.5">
+        <Reveal direction="right" delay={0.12} noFade><div className="dark-info-card rounded-xl !px-2 !py-2.5">
           <p className="text-[0.6rem] uppercase tracking-[0.18em] text-lavender-soft">Уақыты</p>
           <p className="font-number mt-1 text-2xl text-white">{invitation.time}</p>
           <p className="mt-0.5 text-[0.65rem] text-white/62">басталады</p>
@@ -27,7 +27,7 @@ export function TimeDetails() {
         <span>Қазан</span>
         <span className="font-number">2026</span>
       </div></Reveal>
-      <Reveal direction="down" delay={0.2}><div className="glass-panel mx-auto mt-3 grid w-[75vw] max-w-[300px] grid-cols-7 gap-1 rounded-2xl p-2 text-white">
+      <Reveal direction="down" delay={0.2} noFade><div className="glass-panel mx-auto mt-3 grid w-[75vw] max-w-[300px] grid-cols-7 gap-1 rounded-2xl p-2 text-white">
         {weekdays.map((day) => (
           <div key={day} className="pb-1 text-[0.6rem] font-semibold tracking-[0.08em] text-white/80">
             {day}
@@ -53,8 +53,8 @@ export function TimeDetails() {
           </div>
         ))}
       </div></Reveal>
-      <Reveal direction="up" delay={0.24}><a
-        className="black-glass-btn mt-4 inline-flex rounded-full px-5 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white transition"
+<Reveal direction="up" delay={0.24} noFade><a
+          className="black-glass-btn mt-4 inline-flex rounded-full px-5 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white transition"
         href={invitation.calendarUrl}
         target="_blank"
         rel="noreferrer"

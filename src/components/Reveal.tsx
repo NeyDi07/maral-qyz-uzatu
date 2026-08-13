@@ -8,6 +8,7 @@ type RevealProps = {
   className?: string;
   delay?: number;
   direction?: 'up' | 'down' | 'left' | 'right';
+  noFade?: boolean;
 };
 
 const offsets = {
@@ -17,16 +18,17 @@ const offsets = {
   right: { x: 30 },
 };
 
-export function Reveal({ children, className = '', delay = 0, direction = 'up' }: RevealProps) {
+export function Reveal({ children, className = '', delay = 0, direction = 'up', noFade = false }: RevealProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
       className={className}
-      initial={shouldReduceMotion ? false : { opacity: 0, ...offsets[direction] }}
+      style={noFade ? { opacity: 1 } : undefined}
+      initial={shouldReduceMotion ? false : noFade ? { ...offsets[direction] } : { opacity: 0, ...offsets[direction] }}
       transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1], delay }}
       viewport={{ once: true, amount: 0.5 }}
-      whileInView={shouldReduceMotion ? undefined : { opacity: 1, x: 0, y: 0 }}
+      whileInView={shouldReduceMotion ? undefined : noFade ? { x: 0, y: 0 } : { opacity: 1, x: 0, y: 0 }}
     >
       {children}
     </motion.div>
