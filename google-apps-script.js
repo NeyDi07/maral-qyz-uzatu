@@ -85,7 +85,7 @@ function updateDashboard() {
   dashboard.clear();
 
   // --- Заголовок ---
-  dashboard.mergeRange("A1:F1");
+  dashboard.getRange("A1:F1").merge();
   var titleCell = dashboard.getRange("A1");
   titleCell.setValue("МАРАЛ ҚЫЗ ҰЗАТУ — СТАТИСТИКА ҚОНАҚТАР");
   titleCell.setFontSize(18).setFontWeight("bold").setHorizontalAlignment("center");
