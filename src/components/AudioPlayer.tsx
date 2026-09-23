@@ -21,7 +21,7 @@ export function AudioPlayer({ isPlaying, currentTime, duration, onToggle, onSeek
   }
 
   return (
-    <div className="fixed inset-x-0 top-3 z-50 mx-auto w-[min(210px,calc(100%-3rem))] rounded-[0.8rem] border border-lavender/18 bg-black/38 px-2 py-1.5 text-white shadow-[0_10px_32px_rgba(0,0,0,0.32)] backdrop-blur-xl">
+    <div className="fixed inset-x-0 top-3 z-50 mx-auto w-[min(210px,calc(100%-3rem))] rounded-[0.8rem] border border-lavender-soft/45 bg-ivory/95 px-2 py-1.5 text-plum shadow-[0_10px_32px_rgba(74,36,79,0.22)]">
       <input
         aria-label="Әуен барысы"
         className="audio-range w-full"

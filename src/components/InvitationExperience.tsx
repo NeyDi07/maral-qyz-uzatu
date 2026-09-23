@@ -15,6 +15,7 @@ import { TimeDetails } from '@/components/TimeDetails';
 import { invitation } from '@/data/invitation';
 import { audioTracks } from '@/lib/audio';
 import { AudioPlayer } from './AudioPlayer';
+import { DressCode } from './DressCode';
 
 export function InvitationExperience() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -108,7 +109,7 @@ export function InvitationExperience() {
   }
 
   return (
-    <div className="invite-shell mx-auto min-h-screen w-full max-w-[480px] shadow-[0_0_80px_rgba(0,0,0,0.55)]">
+    <div className="invite-shell mx-auto min-h-svh w-full max-w-[480px]">
       <audio
         data-testid="invitation-audio"
         key={currentTrack.id}
@@ -156,7 +157,7 @@ export function InvitationExperience() {
 const MemoHero = memo(Hero);
 
 const FloatingOrnament = memo(function FloatingOrnament() {
-  return <RotatingOrnament className="absolute -right-[92px] top-[86vh] z-20" opacity={0.92} size={185} />;
+  return <RotatingOrnament className="absolute -right-[92px] top-[86svh] z-20" opacity={0.92} size={185} />;
 });
 
 const InvitationSections = memo(function InvitationSections() {
@@ -167,14 +168,17 @@ const InvitationSections = memo(function InvitationSections() {
       <LocationCard />
       <div className="visual-block visual-block-details flex flex-col justify-center">
         <Countdown />
+        <DressCode />
       </div>
       <div className="visual-block visual-block-rsvp flex flex-col justify-center">
         <RSVPForm />
         <ScrollSection ariaLabel="Той иелері" className="section-panel px-5 pb-12 pt-4 text-center" direction="left">
-          <Ornament className="mb-5" />
-          <p className="mx-auto max-w-sm text-xl leading-9 text-white/88">Келіңіздер, қуанышымыздың куәсі болыңыздар!</p>
-          <p className="mt-6 text-sm uppercase tracking-[0.24em] text-white/68">Құрметпен, той иелері</p>
-          <p className="mt-2 font-display text-5xl italic text-white tracking-wide">{invitation.hosts}</p>
+          <div className="ivory-card rounded-[1.9rem] px-5 py-8">
+            <Ornament className="mb-5" />
+            <p className="mx-auto max-w-sm text-xl leading-9 text-plum/85">Келіңіздер, қуанышымыздың куәсі болыңыздар!</p>
+            <p className="mt-6 text-sm uppercase tracking-[0.24em] text-plum/65">Құрметпен, той иелері</p>
+            <p className="mt-2 font-display text-5xl italic text-plum tracking-wide">{invitation.hosts}</p>
+          </div>
         </ScrollSection>
       </div>
     </>

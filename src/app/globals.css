@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 :root {
+  --ivory: #faf6f0;
   --cream: #f6efe7;
+  --linen: #e9dfd2;
   --lavender-soft: #c8add4;
   --lavender: #9f74b4;
   --lavender-deep: #7b2cbf;
@@ -11,6 +13,14 @@
   --gold: #c89a35;
   --maroon: #7e1f29;
   --ink: #181012;
+  --ivory-rgb: 250 246 240;
+  --cream-rgb: 246 239 231;
+  --lavender-soft-rgb: 200 173 212;
+  --lavender-rgb: 159 116 180;
+  --lavender-deep-rgb: 123 44 191;
+  --plum-rgb: 74 36 79;
+  --gold-rgb: 200 154 53;
+  --maroon-rgb: 126 31 41;
   --font-display: 'Playfair Display';
   --font-body: 'Literata';
   --font-number: 'Cormorant Garamond', 'Playfair Display', 'Times New Roman', serif;
@@ -23,15 +33,15 @@
 html {
   min-height: 100%;
   scroll-behavior: smooth;
-  background: #080506;
+  background: var(--cream);
 }
 
 body {
   min-height: 100%;
   margin: 0;
-  color: white;
+  color: var(--plum);
   font-family: var(--font-body), Georgia, 'Times New Roman', serif;
-  background: #080506;
+  background: var(--cream);
 }
 
 button,
@@ -46,7 +56,7 @@ select {
   cursor: pointer;
   appearance: none;
   border-radius: 999px;
-  background: rgba(200, 173, 212, 0.6);
+  background: rgba(159, 116, 180, 0.45);
   outline: none;
 }
 
@@ -56,8 +66,8 @@ select {
   appearance: none;
   border: none;
   border-radius: 999px;
-  background: var(--lavender-soft);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  background: var(--lavender-deep);
+  box-shadow: 0 2px 8px rgba(74, 36, 79, 0.3);
 }
 
 .audio-range::-moz-range-thumb {
@@ -65,8 +75,8 @@ select {
   height: 0.46rem;
   border: none;
   border-radius: 999px;
-  background: var(--lavender-soft);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  background: var(--lavender-deep);
+  box-shadow: 0 2px 8px rgba(74, 36, 79, 0.3);
 }
 
 .player-side-button {
@@ -75,17 +85,17 @@ select {
   height: 1.6rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(200, 173, 212, 0.25);
+  border: 1px solid rgba(159, 116, 180, 0.3);
   border-radius: 999px;
-  color: white;
-  background: rgba(200, 173, 212, 0.1);
+  color: var(--plum);
+  background: rgba(250, 246, 240, 0.65);
   box-shadow: none;
   transition: background 160ms ease, border-color 160ms ease;
 }
 
 .player-side-button:hover {
-  background: rgba(200, 173, 212, 0.2);
-  border-color: rgba(200, 173, 212, 0.4);
+  background: rgba(250, 246, 240, 0.95);
+  border-color: rgba(159, 116, 180, 0.55);
 }
 
 .player-main-button {
@@ -97,14 +107,14 @@ select {
   justify-content: center;
   border: 0;
   border-radius: 999px;
-  color: #1c1111;
-  background: white;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  color: var(--ivory);
+  background: var(--lavender-deep);
+  box-shadow: 0 8px 20px rgba(123, 44, 191, 0.32);
   transition: background 160ms ease;
 }
 
 .player-main-button:hover {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--plum);
 }
 
 .player-heart,
@@ -118,7 +128,7 @@ select {
 }
 
 .player-heart {
-  color: var(--lavender);
+  color: var(--ivory);
   transform: scale(1);
 }
 
@@ -145,67 +155,12 @@ select {
   width: 0.22rem;
   height: 0.74rem;
   border-radius: 999px;
-  background: #1c1111;
+  background: var(--ivory);
 }
 
 .player-main-button.is-playing .player-pause {
   opacity: 1;
   transform: scale(1) rotate(0deg);
-}
-
-.hero-slow-pan {
-  transform: none;
-}
-
-.reveal-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.reveal-card::before {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  content: '';
-  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.58), transparent);
-  transform: translateX(-120%);
-  animation: card-sheen 8s ease-in-out infinite;
-}
-
-.countdown-tile {
-  position: relative;
-  overflow: hidden;
-}
-
-.countdown-tile::after {
-  position: absolute;
-  inset: auto 18% 0;
-  height: 2px;
-  content: '';
-  background: linear-gradient(90deg, transparent, var(--lavender-soft), transparent);
-  opacity: 0.75;
-}
-
-@keyframes hero-pan {
-  from {
-    transform: scale(1.02) translate3d(-0.35rem, -0.25rem, 0);
-  }
-
-  to {
-    transform: scale(1.08) translate3d(0.35rem, 0.25rem, 0);
-  }
-}
-
-@keyframes card-sheen {
-  0%,
-  58% {
-    transform: translateX(-120%);
-  }
-
-  76%,
-  100% {
-    transform: translateX(120%);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -228,8 +183,8 @@ body::before {
   inset: 0;
   z-index: 0;
   content: '';
-  opacity: 0.08;
-  background-image: radial-gradient(circle at center, rgba(255,255,255,0.55) 0.7px, transparent 0.8px);
+  opacity: 0.5;
+  background-image: radial-gradient(circle at center, rgba(123, 44, 191, 0.05) 0.7px, transparent 0.8px);
   background-size: 4px 4px;
 }
 
@@ -239,28 +194,25 @@ main {
 }
 
 ::selection {
-  color: white;
+  color: var(--ivory);
   background: var(--plum);
 }
 
 @layer components {
   .section-kicker {
-    @apply text-sm uppercase tracking-[0.28em] text-white/60;
+    @apply text-sm uppercase tracking-[0.28em] text-plum/60;
   }
 
   .section-title {
-    @apply mt-4 font-display text-4xl italic leading-tight text-white;
-  }
-
-  .info-card {
-    @apply rounded-[1.7rem] border border-white/80 bg-white/60 px-4 py-7 text-center shadow-soft backdrop-blur;
+    @apply mt-4 font-display text-4xl italic leading-tight text-plum;
   }
 }
 
 .invite-shell {
   position: relative;
   overflow: hidden;
-  background-color: #12080d;
+  background-color: var(--cream);
+  box-shadow: 0 0 80px rgba(74, 36, 79, 0.16);
 }
 
 .invite-shell::before {
@@ -271,7 +223,7 @@ main {
   position: relative;
   min-height: 100svh;
   overflow: hidden;
-  background-color: #12080d;
+  background-color: var(--linen);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -279,27 +231,27 @@ main {
 }
 
 .visual-block-invitation {
-  background-image: url('/media/photos/Марал2.png');
+  background-image: url('/media/photos/maral-2.jpg');
   background-position: center 38%;
 }
 
 .visual-block-schedule {
-  background-image: url('/media/photos/Марал3.png');
+  background-image: url('/media/photos/maral-3.jpg');
   background-position: center 42%;
 }
 
 .visual-block-location {
-  background-image: url('/media/photos/Марал11.png');
+  background-image: url('/media/photos/maral-11.jpg');
   background-position: center 34%;
 }
 
 .visual-block-details {
-  background-image: url('/media/photos/Марал2.png');
+  background-image: url('/media/photos/maral-2.jpg');
   background-position: center 46%;
 }
 
 .visual-block-rsvp {
-  background-image: url('/media/photos/Марал3.png');
+  background-image: url('/media/photos/maral-3.jpg');
   background-position: center 44%;
 }
 
@@ -310,7 +262,7 @@ main {
 .section-panel {
   position: relative;
   overflow: hidden;
-  color: white;
+  color: var(--plum);
   background-color: transparent;
   z-index: 2;
 }
@@ -320,8 +272,7 @@ main {
   font-size: clamp(3rem, 12vw, 4.4rem);
   font-style: italic;
   line-height: 0.95;
-  color: white;
-  text-shadow: 0 4px 18px rgba(0,0,0,0.55), 0 0 24px rgba(200,173,212,0.22);
+  color: var(--plum);
 }
 
 .font-number {
@@ -332,8 +283,8 @@ main {
 }
 
 .ornament-mask {
-  mask: url('/media/photos/длинный_ою.png') center / contain no-repeat;
-  -webkit-mask: url('/media/photos/длинный_ою.png') center / contain no-repeat;
+  mask: url('/media/photos/ornament-long.png') center / contain no-repeat;
+  -webkit-mask: url('/media/photos/ornament-long.png') center / contain no-repeat;
 }
 
 .heart-date {
@@ -341,93 +292,72 @@ main {
   isolation: isolate;
 }
 
-.dark-info-card {
-  border: 1px solid rgba(200,173,212,0.34);
-  background: linear-gradient(180deg, rgba(48,22,58,0.38), rgba(10,5,13,0.42));
+.ivory-card {
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(250, 246, 240, 0.93);
+  box-shadow: 0 22px 60px rgba(74, 36, 79, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.info-card {
+  border: 1px solid rgba(200, 173, 212, 0.45);
+  background: rgba(255, 253, 250, 0.88);
   padding: 1rem 0.75rem;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.12);
-  -webkit-backdrop-filter: blur(7px) saturate(115%);
-  backdrop-filter: blur(7px) saturate(115%);
+  box-shadow: 0 14px 36px rgba(74, 36, 79, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .glass-panel {
-  border: 1px solid rgba(200,173,212,0.35);
-  background: linear-gradient(180deg, rgba(42,18,50,0.34), rgba(7,4,10,0.46));
-  box-shadow: 0 18px 55px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.13);
-  -webkit-backdrop-filter: blur(7px) saturate(112%);
-  backdrop-filter: blur(7px) saturate(112%);
+  border: 1px solid rgba(200, 173, 212, 0.45);
+  background: rgba(250, 246, 240, 0.9);
+  box-shadow: 0 16px 44px rgba(74, 36, 79, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
-.glass-button {
-  border: 1px solid rgba(200,173,212,0.42);
-  background: linear-gradient(180deg, rgba(123,44,191,0.32), rgba(28,10,38,0.38));
-  box-shadow: 0 18px 48px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.16);
-  -webkit-backdrop-filter: blur(8px) saturate(118%);
-  backdrop-filter: blur(8px) saturate(118%);
+.soft-btn {
+  border: 1px solid rgba(200, 173, 212, 0.55);
+  background: rgba(255, 253, 250, 0.92);
+  color: var(--plum);
+  box-shadow: 0 12px 32px rgba(74, 36, 79, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
 
-.glass-button:hover {
-  background: linear-gradient(180deg, rgba(123,44,191,0.42), rgba(34,12,46,0.46));
+.soft-btn:hover {
+  background: #ffffff;
+  border-color: rgba(159, 116, 180, 0.7);
 }
 
 .rsvp-input {
   width: 100%;
   border: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.55);
+  border-bottom: 1px solid rgba(74, 36, 79, 0.28);
   border-radius: 0.55rem 0.55rem 0 0;
-  background: rgba(8,5,10,0.42);
-  color: white;
+  background: rgba(255, 253, 250, 0.8);
+  color: var(--plum);
   outline: none;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
 }
 
 .rsvp-input::placeholder {
-  color: rgba(255,255,255,0.46);
+  color: rgba(74, 36, 79, 0.42);
 }
 
 .rsvp-input:focus {
-  border-bottom-color: var(--lavender-soft);
-  background: rgba(8,5,10,0.56);
-}
-
-.text-backdrop {
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(0,0,0,0.28);
-  -webkit-backdrop-filter: blur(4px) saturate(105%);
-  backdrop-filter: blur(4px) saturate(105%);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.16);
+  border-bottom-color: var(--lavender-deep);
+  background: #ffffff;
 }
 
 .rsvp-card {
-  border: 1px solid rgba(255,255,255,0.22);
-  background: linear-gradient(180deg, rgba(18,8,13,0.44), rgba(10,4,7,0.36));
-  box-shadow: 0 22px 70px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.14);
-  -webkit-backdrop-filter: blur(8px) saturate(110%);
-  backdrop-filter: blur(8px) saturate(110%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(250, 246, 240, 0.94);
+  box-shadow: 0 24px 64px rgba(74, 36, 79, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .guest-count-card {
-  border: 1px solid rgba(255,255,255,0.22);
-  background: rgba(255,255,255,0.1);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  border: 1px solid rgba(200, 173, 212, 0.45);
+  background: rgba(255, 253, 250, 0.75);
 }
 
 .guest-count-card-active {
-  border-color: rgba(200,173,212,0.7);
-  background: rgba(200,173,212,0.18);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.14);
-}
-
-.black-glass-btn {
-  border: 1px solid rgba(255,255,255,0.28);
-  background: linear-gradient(180deg, rgba(18,9,23,0.46), rgba(6,3,8,0.38));
-  box-shadow: 0 14px 40px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.14);
-  -webkit-backdrop-filter: blur(7px) saturate(108%);
-  backdrop-filter: blur(7px) saturate(108%);
-}
-
-.black-glass-btn:hover {
-  background: linear-gradient(180deg, rgba(28,14,36,0.52), rgba(10,5,14,0.44));
+  border-color: rgba(159, 116, 180, 0.75);
+  background: rgba(200, 173, 212, 0.22);
+  box-shadow: 0 8px 24px rgba(123, 44, 191, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .square-tile {
@@ -451,14 +381,9 @@ main {
   justify-content: center;
 }
 
-.heart-ornament-mask {
-  mask: url('/media/photos/ою_в_виде_сердечко.png') center / contain no-repeat;
-  -webkit-mask: url('/media/photos/ою_в_виде_сердечко.png') center / contain no-repeat;
-}
-
 .main-ornament-mask {
-  mask: url('/media/photos/квадратный_основной_ою.png') center / contain no-repeat;
-  -webkit-mask: url('/media/photos/квадратный_основной_ою.png') center / contain no-repeat;
+  mask: url('/media/photos/ornament-main.png') center / contain no-repeat;
+  -webkit-mask: url('/media/photos/ornament-main.png') center / contain no-repeat;
 }
 
 .opening-card {

@@ -17,14 +17,14 @@ export const audioTracks: AudioTrack[] = [
   {
     id: 'balausa',
     title: 'Kalifarniya - Balausa',
-    src: '/media/audio/Kalifarniya_Balausa.mp3',
+    src: '/media/audio/balausa.mp3',
     startAt: 0,
     loop: true,
   },
   {
     id: 'qyz-uzatu',
     title: 'Қыз ұзату әуені',
-    src: '/media/audio/Daniya_Arman_yzy_-_yz_zatu_(TheMP3.Info).mp3',
+    src: '/media/audio/qyz-uzatu.mp3',
     startAt: 0,
     loop: true,
   },

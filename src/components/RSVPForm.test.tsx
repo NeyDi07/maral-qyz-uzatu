@@ -31,7 +31,7 @@ describe('RSVPForm', () => {
 
     fireEvent.click(screen.getByLabelText('Иә, міндетті түрде келемін'));
 
-    expect(screen.getByLabelText('1 қонақ')).toBeInTheDocument();
+    expect(screen.getByLabelText('Өзім келемін')).toBeChecked();
     expect(screen.getByLabelText('1-қонақтың есімі')).toBeInTheDocument();
     expect(screen.queryByLabelText('2-қонақтың есімі')).not.toBeInTheDocument();
 
@@ -47,28 +47,26 @@ describe('RSVPForm', () => {
     expect(screen.getByText('Айгүл, сізге арналған орын сақталды.')).toBeInTheDocument();
   });
 
-  it('shows two name fields plus extra guest field for 3plus', async () => {
+  it('collects both names when a couple is coming', async () => {
     render(<RSVPForm />);
 
     fireEvent.click(screen.getByLabelText('Иә, міндетті түрде келемін'));
-    fireEvent.click(screen.getByLabelText('3+ қонақ'));
+    fireEvent.click(screen.getByLabelText('Жұбайыммен келемін'));
 
     expect(screen.getByLabelText('1-қонақтың есімі')).toBeInTheDocument();
     expect(screen.getByLabelText('2-қонақтың есімі')).toBeInTheDocument();
-    expect(screen.getByLabelText('Қалған қонақтардың есімдері')).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText('1-қонақтың есімі'), { target: { value: 'Айгүл' } });
     fireEvent.change(screen.getByLabelText('2-қонақтың есімі'), { target: { value: 'Ерлан' } });
-    fireEvent.change(screen.getByLabelText('Қалған қонақтардың есімдері'), { target: { value: 'Динара, Айдос' } });
     fireEvent.click(screen.getByRole('button', { name: 'Жіберу' }));
 
     await waitFor(() => expect(globalThis.fetch).toHaveBeenCalledTimes(1));
     const body = JSON.parse(vi.mocked(globalThis.fetch).mock.calls[0][1]?.body as string);
     expect(body).toMatchObject({
       attendance: 'coming',
-      guestCount: '3plus',
+      guestCount: 2,
       guestNames: ['Айгүл', 'Ерлан'],
-      extraGuestNames: 'Динара, Айдос',
+      partnerName: 'Ерлан',
       name: 'Айгүл',
     });
   });

@@ -45,7 +45,7 @@ export function RotatingOrnament({ className = '', size = 120, opacity = 0.35 }:
     <div aria-hidden="true" className={`pointer-events-none ${className}`} style={frameStyle}>
       <motion.div className="h-full w-full" variants={spinVariants} animate="animate">
         <div
-          className="h-full w-full bg-white drop-shadow-[0_0_18px_rgba(255,255,255,0.55)]"
+          className="h-full w-full bg-[var(--lavender-deep)] drop-shadow-[0_0_14px_rgba(123,44,191,0.35)]"
           style={ornamentStyle}
         />
       </motion.div>

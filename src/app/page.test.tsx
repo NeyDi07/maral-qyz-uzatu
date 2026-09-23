@@ -10,9 +10,9 @@ describe('Home invitation page', () => {
     expect(screen.getAllByText('Қыз ұзату')[0]).toBeInTheDocument();
     expect(screen.getByText('05.11.26')).toBeInTheDocument();
     expect(screen.getByText(/Құрметті ағайын-туыс/)).toBeInTheDocument();
-    expect(screen.getByText('қыркүйе, жұма')).toBeInTheDocument();
+    expect(screen.getByText('қараша, бейсенбі')).toBeInTheDocument();
     expect(screen.getByText('17:00')).toBeInTheDocument();
-    expect(screen.getByText('Қыркүйе 2026')).toBeInTheDocument();
+    expect(screen.getByText('Қараша 2026')).toBeInTheDocument();
     expect(screen.getByText('"Aisha"')).toBeInTheDocument();
     expect(screen.getByText('мейрамханасы')).toBeInTheDocument();
     expect(screen.getByText('Өскемен қаласы, Виноградов көшесі, 33')).toBeInTheDocument();

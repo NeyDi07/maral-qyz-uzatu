@@ -107,10 +107,10 @@ export function RSVPForm() {
 
   return (
     <ScrollSection ariaLabel="Сауалнама" className="section-panel px-5 pb-6 pt-8">
-      <div className="rsvp-card rounded-[1.8rem] px-4 py-7 text-white">
+      <div className="rsvp-card rounded-[1.8rem] px-4 py-7 text-plum">
         <p className="sr-only">Сауалнама</p>
         <h2 className="script-heading text-center">Анкета</h2>
-        <p className="mx-auto mt-3 max-w-xs text-center text-lg leading-8 text-lavender-soft/82">
+        <p className="mx-auto mt-3 max-w-xs text-center text-lg leading-8 text-lavender-deep/75">
           Тойға қатысуыңызды растауыңызды сұраймыз.
         </p>
         <form className="mt-5 space-y-4" onSubmit={(event) => event.preventDefault()}>
@@ -120,8 +120,8 @@ export function RSVPForm() {
                 key={option.value}
                 className={`flex cursor-pointer items-start gap-3 rounded-[1.25rem] px-4 py-3 transition ${
                   attendance === option.value
-                    ? 'border border-white/28 bg-white/16 text-white shadow-[0_16px_38px_rgba(0,0,0,0.2)]'
-                    : 'border border-white/14 bg-white/6 text-white/86'
+                    ? 'border border-lavender bg-lavender-soft/20 text-plum shadow-[0_14px_34px_rgba(123,44,191,0.14)]'
+                    : 'border border-lavender-soft/35 bg-white/55 text-plum/85'
                 }`}
               >
                 <input
@@ -135,7 +135,7 @@ export function RSVPForm() {
                 />
                 <span>
                   <span className="block font-semibold">{option.label}</span>
-                  <span className="mt-1 block text-sm text-white/74">{option.helper}</span>
+                  <span className="mt-1 block text-sm text-plum/65">{option.helper}</span>
                 </span>
               </label>
             ))}
@@ -143,14 +143,14 @@ export function RSVPForm() {
           {errors.attendance ? <p className="-mt-3 text-sm text-maroon">{errors.attendance}</p> : null}
 
           {attendance === 'coming' ? (
-            <div className="rounded-[1.35rem] border border-white/16 bg-white/6 p-4">
-              <p className="text-center text-sm font-semibold uppercase tracking-[0.14em] text-lavender-soft">Қонақ саны</p>
+            <div className="rounded-[1.35rem] border border-lavender-soft/40 bg-white/55 p-4">
+              <p className="text-center text-sm font-semibold uppercase tracking-[0.14em] text-lavender-deep">Қонақ саны</p>
               <div className="mt-4 grid grid-cols-2 gap-2" role="group" aria-label="Қонақ саны">
                 {guestCountOptions.map((option) => (
                   <label
                     key={option.value}
                     className={`guest-count-card flex cursor-pointer flex-col items-center rounded-[1rem] px-2 py-3 text-center transition ${
-                      guestCount === option.value ? 'guest-count-card-active text-white' : 'text-white/78'
+                      guestCount === option.value ? 'guest-count-card-active text-plum' : 'text-plum/75'
                     }`}
                   >
                     <input
@@ -162,7 +162,7 @@ export function RSVPForm() {
                       value={option.value}
                       onChange={() => handleGuestCountChange(option.value)}
                     />
-                    <span className="text-lavender-soft" aria-hidden="true">
+                    <span className="text-lavender-deep" aria-hidden="true">
                       {option.value === 1 ? (
                         <PersonIcon className="h-6 w-6" />
                       ) : (
@@ -170,7 +170,7 @@ export function RSVPForm() {
                       )}
                     </span>
                     <span className="mt-2 text-sm font-semibold">{option.label}</span>
-                    <span className="mt-1 text-[0.64rem] leading-4 text-white/58">{option.helper}</span>
+                    <span className="mt-1 text-[0.64rem] leading-4 text-plum/55">{option.helper}</span>
                   </label>
                 ))}
               </div>
@@ -178,7 +178,7 @@ export function RSVPForm() {
               <div className="mt-4 space-y-3">
                 {guestNames.slice(0, guestCount).map((guestName, index) => (
                   <div key={index}>
-                    <label className="block text-sm font-semibold tracking-[0.08em] text-white/82" htmlFor={`guest-name-${index}`}>
+                    <label className="block text-sm font-semibold tracking-[0.08em] text-plum/80" htmlFor={`guest-name-${index}`}>
                       {index + 1}-қонақтың есімі
                     </label>
                     <input
@@ -189,28 +189,28 @@ export function RSVPForm() {
                       value={guestName}
                       onChange={(event) => handleGuestNameChange(index, event.currentTarget.value)}
                     />
-                    {errors.guestNames?.[index] ? <p className="mt-2 text-sm text-lavender-soft">{errors.guestNames[index]}</p> : null}
+                    {errors.guestNames?.[index] ? <p className="mt-2 text-sm text-maroon">{errors.guestNames[index]}</p> : null}
                   </div>
                 ))}
               </div>
             </div>
           ) : null}
           {attendance === 'not_coming' ? (
-            <div className="rounded-[1.25rem] border border-white/20 bg-black/20 p-5 text-center">
-              <p className="font-display text-3xl italic text-white">Шынымен келе алмайсыз ба?</p>
-              <p className="mt-3 text-base leading-7 text-white/70">
+            <div className="rounded-[1.25rem] border border-lavender-soft/45 bg-white/70 p-5 text-center">
+              <p className="font-display text-3xl italic text-plum">Шынымен келе алмайсыз ба?</p>
+              <p className="mt-3 text-base leading-7 text-plum/70">
                 Марал сізді қонақтардың арасынан көремін деп қуанып жүр еді. Егер мүмкіндігіңіз болса, жауабыңызды қайта қарап көріңіз.
               </p>
               <div className="mt-5 grid gap-3">
                 <button
-                  className="rounded-full bg-white px-5 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-black"
+                  className="rounded-full bg-plum px-5 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-ivory shadow-[0_14px_34px_rgba(74,36,79,0.24)] transition hover:bg-lavender-deep focus:outline-none focus:ring-4 focus:ring-lavender/25"
                   type="button"
                   onClick={() => handleAttendanceChange('coming')}
                 >
                   Жарайды, келемін
                 </button>
                 <button
-                  className="rounded-full border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold text-white"
+                  className="rounded-full border border-plum/25 bg-transparent px-5 py-3 text-sm font-semibold text-plum transition hover:bg-plum/5 focus:outline-none focus:ring-4 focus:ring-lavender/20"
                   type="button"
                   onClick={() => {
                     setDeclineConfirmed(true);
@@ -220,13 +220,13 @@ export function RSVPForm() {
                   Иә, өкінішке орай келе алмаймын
                 </button>
               </div>
-              {declineConfirmed ? <p className="mt-4 text-sm text-white/58">Түсінікті, жауабыңызды қабылдаймыз.</p> : null}
-              {errors.declineConfirmation ? <p className="mt-4 text-sm text-lavender-soft">{errors.declineConfirmation}</p> : null}
+              {declineConfirmed ? <p className="mt-4 text-sm text-plum/60">Түсінікті, жауабыңызды қабылдаймыз.</p> : null}
+              {errors.declineConfirmation ? <p className="mt-4 text-sm text-maroon">{errors.declineConfirmation}</p> : null}
             </div>
           ) : null}
-          {submitError ? <p className="rounded-[1.1rem] bg-white/10 px-4 py-3 text-center text-sm leading-6 text-lavender-soft">{submitError}</p> : null}
+          {submitError ? <p className="rounded-[1.1rem] bg-maroon/10 px-4 py-3 text-center text-sm leading-6 text-maroon">{submitError}</p> : null}
           <button
-            className="w-full rounded-[1.25rem] bg-white px-7 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-black shadow-[0_20px_55px_rgba(255,255,255,0.16)] transition hover:bg-lavender-soft focus:outline-none focus:ring-4 focus:ring-lavender/25 disabled:cursor-wait disabled:opacity-70"
+            className="w-full rounded-[1.25rem] bg-plum px-7 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-ivory shadow-[0_18px_44px_rgba(74,36,79,0.28)] transition hover:bg-lavender-deep focus:outline-none focus:ring-4 focus:ring-lavender/30 disabled:cursor-wait disabled:opacity-70"
             disabled={isSubmitting}
             type="button"
             onClick={handleSubmit}

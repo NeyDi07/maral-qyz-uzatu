@@ -5,13 +5,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: 'var(--cream)',
-        'lavender-soft': 'var(--lavender-soft)',
-        lavender: 'var(--lavender)',
-        'lavender-deep': 'var(--lavender-deep)',
-        plum: 'var(--plum)',
-        gold: 'var(--gold)',
-        maroon: 'var(--maroon)',
+        cream: 'rgb(var(--cream-rgb) / <alpha-value>)',
+        ivory: 'rgb(var(--ivory-rgb) / <alpha-value>)',
+        'lavender-soft': 'rgb(var(--lavender-soft-rgb) / <alpha-value>)',
+        lavender: 'rgb(var(--lavender-rgb) / <alpha-value>)',
+        'lavender-deep': 'rgb(var(--lavender-deep-rgb) / <alpha-value>)',
+        plum: 'rgb(var(--plum-rgb) / <alpha-value>)',
+        gold: 'rgb(var(--gold-rgb) / <alpha-value>)',
+        maroon: 'rgb(var(--maroon-rgb) / <alpha-value>)',
         ink: 'var(--ink)',
       },
       fontFamily: {
