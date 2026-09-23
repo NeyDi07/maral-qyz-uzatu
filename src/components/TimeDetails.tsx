@@ -3,7 +3,7 @@ import { Reveal } from './Reveal';
 import { ScrollSection } from './ScrollSection';
 
 const weekdays = ['ДС', 'СС', 'СР', 'БС', 'ЖМ', 'СБ', 'ЖС'];
-const cells = ['', '', '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+const cells = ['', '', '', '', '', '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
 
 export function TimeDetails() {
   return (
@@ -13,8 +13,8 @@ export function TimeDetails() {
       <div className="mx-auto mt-5 grid w-[76%] max-w-[270px] grid-cols-2 gap-2.5">
         <Reveal direction="left" delay={0.08} noFade><div className="dark-info-card rounded-xl !px-2 !py-2.5">
           <p className="text-[0.6rem] uppercase tracking-[0.18em] text-lavender-soft">Күні</p>
-          <p className="font-number mt-1 text-2xl text-white">04</p>
-          <p className="mt-0.5 text-[0.65rem] text-white/62">қазан, жексенбі</p>
+          <p className="font-number mt-1 text-2xl text-white">05</p>
+          <p className="mt-0.5 text-[0.65rem] text-white/62">қыркүйе, жұма</p>
         </div></Reveal>
         <Reveal direction="right" delay={0.12} noFade><div className="dark-info-card rounded-xl !px-2 !py-2.5">
           <p className="text-[0.6rem] uppercase tracking-[0.18em] text-lavender-soft">Уақыты</p>
@@ -22,9 +22,9 @@ export function TimeDetails() {
           <p className="mt-0.5 text-[0.65rem] text-white/62">басталады</p>
         </div></Reveal>
       </div>
-      <p className="sr-only">Қазан 2026</p>
+      <p className="sr-only">Қыркүйе 2026</p>
       <Reveal direction="up" delay={0.16}><div className="mx-auto mt-4 flex w-[75vw] max-w-[300px] items-center justify-between px-2 font-serif text-2xl uppercase tracking-[0.08em] text-white">
-        <span>Қазан</span>
+        <span>Қыркүйе</span>
         <span className="font-number">2026</span>
       </div></Reveal>
       <Reveal direction="down" delay={0.2} noFade><div className="glass-panel mx-auto mt-3 grid w-[75vw] max-w-[300px] grid-cols-7 gap-1 rounded-2xl p-2 text-white">
@@ -35,7 +35,7 @@ export function TimeDetails() {
         ))}
         {cells.map((day, index) => (
           <div key={`${day}-${index}`} className="font-number flex h-7 items-center justify-center text-lg text-white/88">
-            {day === '4' ? (
+            {day === '5' ? (
               <span className="heart-date relative flex h-9 w-9 items-center justify-center text-sm font-semibold text-white">
                 <svg className="absolute inset-0 h-full w-full drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)]" viewBox="0 0 64 58" aria-hidden="true">
                   <path
@@ -45,7 +45,7 @@ export function TimeDetails() {
                     strokeWidth="2.5"
                   />
                 </svg>
-                <span className="relative z-10">4</span>
+                <span className="relative z-10">5</span>
               </span>
             ) : (
               day

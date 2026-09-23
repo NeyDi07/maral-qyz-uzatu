@@ -15,8 +15,8 @@
 - Language: Kazakh.
 - Main name: `Марал`.
 - Event: `Қыз ұзату`.
-- Hero date: `04.10.26`.
-- Full event date: `4 қазан 2026 жыл`.
+- Hero date: `05.11.26`.
+- Full event date: `5 қыркүйе 2026 жыл`.
 - Time: `сағат 18:00-де басталады`.
 - Venue: `Aisha мейрамханасы`.
 - Address: `Өскемен қаласы, Виноградов көшесі, 33`.
@@ -203,7 +203,7 @@ Media note:
 
 ```text
 Той салтанаты:
-4 қазан 2026 жыл
+5 қыркүйе 2026 жыл
 сағат 18:00-де басталады
 ```
 
@@ -232,10 +232,10 @@ Aisha мейрамханасы
 - [ ] Put all event constants into `src/data/invitation.ts`.
 - [ ] Build mobile-first section flow in `page.tsx`.
 - [ ] Use temporary hero image from available media until actual Maral photos are chosen.
-- [ ] Build a polished `Hero` with `Марал`, `Қыз ұзату`, `04.10.26`, and an audio-open CTA placeholder.
+- [ ] Build a polished `Hero` with `Марал`, `Қыз ұзату`, `05.11.26`, and an audio-open CTA placeholder.
 - [ ] Build formal invitation text section with readable typography.
 - [ ] Build date/time cards with the full date and `18:00` visually separated.
-- [ ] Build October 2026 calendar and highlight `4` with a heart/gold mark.
+- [ ] Build November 2026 calendar and highlight `5` with a heart/gold mark.
 - [ ] Build location card with 2GIS button.
 - [ ] Build countdown placeholders.
 - [ ] Build dress-code section with temporary text.
@@ -546,7 +546,7 @@ After each stage:
 - The site is a polished single-page mobile-first invitation.
 - Music starts from 30 seconds after first interaction and can be controlled.
 - Event data is accurate.
-- Countdown targets `2026-10-04T18:00:00+05:00` unless the timezone is later corrected.
+- Countdown targets `2026-11-05T18:00:00+05:00` unless the timezone is later corrected.
 - RSVP form validates fields and writes to Google Sheets.
 - Final response animation is polished and answer-specific.
 - Site deploys successfully to Vercel.

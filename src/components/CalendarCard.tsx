@@ -3,17 +3,17 @@ import { invitation } from '@/data/invitation';
 import { Reveal } from './Reveal';
 
 const weekdays = ['ДС', 'СС', 'СР', 'БС', 'ЖМ', 'СБ', 'ЖС'];
-const cells = ['', '', '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+const cells = ['', '', '', '', '', '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
 
 export function CalendarCard() {
   return (
-    <ScrollSection ariaLabel="Қазан күнтізбесі" className="section-panel px-5 py-10" direction="left">
+    <ScrollSection ariaLabel="Қыркүйе күнтізбесі" className="section-panel px-5 py-10" direction="left">
       <div className="text-center">
         <Reveal direction="left"><h2 className="script-heading">Той салтанаты:</h2></Reveal>
-        <Reveal direction="right" delay={0.06}><p className="mt-4 font-number text-2xl text-lavender-soft/90">04 қазан 2026</p></Reveal>
-        <p className="sr-only">Қазан 2026</p>
+        <Reveal direction="right" delay={0.06}><p className="mt-4 font-number text-2xl text-lavender-soft/90">05 қыркүйе 2026</p></Reveal>
+        <p className="sr-only">Қыркүйе 2026</p>
         <Reveal direction="up" delay={0.1}><div className="mt-8 flex items-center justify-between px-3 font-serif text-4xl uppercase tracking-[0.08em] text-white">
-          <span>Қазан</span>
+          <span>Қыркүйе</span>
           <span className="font-number">2026</span>
         </div></Reveal>
         <Reveal direction="down" delay={0.14} noFade><div className="mt-5 grid grid-cols-7 gap-2 rounded-2xl border border-lavender-soft/35 bg-plum/18 p-3 text-white shadow-[0_18px_55px_rgba(0,0,0,0.28)] backdrop-blur-sm">
@@ -24,7 +24,7 @@ export function CalendarCard() {
           ))}
           {cells.map((day, index) => (
             <div key={`${day}-${index}`} className="font-number flex h-10 items-center justify-center text-2xl text-white/88">
-              {day === '4' ? (
+              {day === '5' ? (
                 <span className="heart-date relative flex h-14 w-14 items-center justify-center text-xl font-semibold text-white">
                   <svg className="absolute inset-0 h-full w-full drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)]" viewBox="0 0 64 58" aria-hidden="true">
                     <path
@@ -34,7 +34,7 @@ export function CalendarCard() {
                       strokeWidth="2.5"
                     />
                   </svg>
-                  <span className="relative z-10">4</span>
+                  <span className="relative z-10">5</span>
                 </span>
               ) : (
                 day

@@ -8,11 +8,11 @@ describe('Home invitation page', () => {
 
     expect(screen.getAllByRole('heading', { name: 'Марал' })[0]).toBeInTheDocument();
     expect(screen.getAllByText('Қыз ұзату')[0]).toBeInTheDocument();
-    expect(screen.getByText('04.10.26')).toBeInTheDocument();
+    expect(screen.getByText('05.11.26')).toBeInTheDocument();
     expect(screen.getByText(/Құрметті ағайын-туыс/)).toBeInTheDocument();
-    expect(screen.getByText('қазан, жексенбі')).toBeInTheDocument();
+    expect(screen.getByText('қыркүйе, жұма')).toBeInTheDocument();
     expect(screen.getByText('17:00')).toBeInTheDocument();
-    expect(screen.getByText('Қазан 2026')).toBeInTheDocument();
+    expect(screen.getByText('Қыркүйе 2026')).toBeInTheDocument();
     expect(screen.getByText('"Aisha"')).toBeInTheDocument();
     expect(screen.getByText('мейрамханасы')).toBeInTheDocument();
     expect(screen.getByText('Өскемен қаласы, Виноградов көшесі, 33')).toBeInTheDocument();

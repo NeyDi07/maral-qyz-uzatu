@@ -6,12 +6,12 @@ const OG_IMAGE = `${SITE_URL}/media/photos/Марал_1.png`;
 
 export const metadata: Metadata = {
   title: 'Марал | Қыз ұзату',
-  description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 4 қазан 2026 ж. Aisha мейрамханасы.',
+  description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 5 қыркүйе 2026 ж. Aisha мейрамханасы.',
   applicationName: 'Марал Қыз ұзату',
   metadataBase: new URL(SITE_URL),
   openGraph: {
     title: 'Марал | Қыз ұзату',
-    description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 4 қазан 2026 ж. Aisha мейрамханасы.',
+    description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 5 қыркүйе 2026 ж. Aisha мейрамханасы.',
     type: 'website',
     locale: 'kk_KZ',
     siteName: 'Марал Қыз ұзату',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Марал | Қыз ұзату',
-    description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 4 қазан 2026 ж.',
+    description: 'Маралдың қыз ұзату тойына арналған шақыру сайты. 5 қыркүйе 2026 ж.',
     images: [OG_IMAGE],
   },
 };
