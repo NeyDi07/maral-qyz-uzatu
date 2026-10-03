@@ -40,6 +40,7 @@ export function RSVPForm() {
   const [guestCount, setGuestCount] = useState<GuestCount>(1);
   const [guestNames, setGuestNames] = useState<string[]>(['']);
   const [declineConfirmed, setDeclineConfirmed] = useState(false);
+  const [declineName, setDeclineName] = useState('');
   const [errors, setErrors] = useState<RSVPErrors>({});
   const [submission, setSubmission] = useState<RSVPSubmission | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,11 +54,14 @@ export function RSVPForm() {
       setGuestCount(1);
       setGuestNames(['']);
       setDeclineConfirmed(false);
+      setDeclineName('');
       return;
     }
 
     if (value === 'not_coming') {
       setGuestNames(['']);
+      setDeclineConfirmed(false);
+      setDeclineName('');
       return;
     }
   }
@@ -74,8 +78,14 @@ export function RSVPForm() {
 
   async function handleSubmit() {
     const activeGuestNames = attendance === 'coming' ? guestNames.slice(0, guestCount) : [];
-    const primaryName = activeGuestNames[0]?.trim() || '';
-    const nextErrors = validateRSVP({ name: primaryName, attendance, guestNames: activeGuestNames, partnerName: activeGuestNames[1]?.trim() || '', declineConfirmed });
+    const primaryName = attendance === 'coming' ? activeGuestNames[0]?.trim() || '' : declineName.trim();
+    const nextErrors = validateRSVP({
+      name: primaryName,
+      attendance,
+      guestNames: activeGuestNames,
+      partnerName: activeGuestNames[1]?.trim() || '',
+      declineConfirmed,
+    });
     setErrors(nextErrors);
     setSubmitError('');
 
@@ -84,10 +94,10 @@ export function RSVPForm() {
     }
 
     const nextSubmission: RSVPSubmission = {
-      name: attendance === 'coming' ? primaryName : 'Қонақ',
+      name: primaryName,
       attendance,
       guestCount: attendance === 'coming' ? guestCount : 0,
-      guestNames: attendance === 'coming' ? activeGuestNames.map((guestName) => guestName.trim()) : [],
+      guestNames: attendance === 'coming' ? activeGuestNames.map((guestName) => guestName.trim()) : [primaryName],
       partnerName: attendance === 'coming' && activeGuestNames[1] ? activeGuestNames[1].trim() : undefined,
       submittedAt: new Date().toISOString(),
       userAgent: typeof navigator === 'undefined' ? undefined : navigator.userAgent,
@@ -220,7 +230,26 @@ export function RSVPForm() {
                   Иә, өкінішке орай келе алмаймын
                 </button>
               </div>
-              {declineConfirmed ? <p className="mt-4 text-sm text-plum/60">Түсінікті, жауабыңызды қабылдаймыз.</p> : null}
+              {declineConfirmed ? (
+                <div className="mt-5 text-left">
+                  <label className="block text-sm font-semibold tracking-[0.08em] text-plum/80" htmlFor="decline-guest-name">
+                    Есіміңізді жазыңыз
+                  </label>
+                  <input
+                    id="decline-guest-name"
+                    className="rsvp-input mt-2 px-2 py-3 text-base"
+                    placeholder="Мысалы: Айгүл"
+                    type="text"
+                    value={declineName}
+                    onChange={(event) => {
+                      setDeclineName(event.currentTarget.value);
+                      setErrors((current) => ({ ...current, name: undefined }));
+                    }}
+                  />
+                  {errors.name ? <p className="mt-2 text-sm text-maroon">{errors.name}</p> : null}
+                  <p className="mt-2 text-xs text-plum/60">Түсінікті, жауабыңызды қабылдаймыз.</p>
+                </div>
+              ) : null}
               {errors.declineConfirmation ? <p className="mt-4 text-sm text-maroon">{errors.declineConfirmation}</p> : null}
             </div>
           ) : null}

@@ -10,6 +10,16 @@
 //     Версия: Новая → Развернуть
 // ============================================================
 
+function doGet(e) {
+  return ContentService
+    .createTextOutput(JSON.stringify({
+      status: "ok",
+      message: "Марал Қыз Ұзату — RSVP API жұмыс істеп тұр",
+      time: Utilities.formatDate(new Date(), "Asia/Almaty", "dd.MM.yyyy HH:mm:ss")
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
@@ -31,6 +41,10 @@ function doPost(e) {
     if (extra.trim()) {
       allNames += (allNames ? ", " : "") + extra.trim();
     }
+    // Если allNames пуст, но есть имя (например, при отказе)
+    if (!allNames && data.name && data.name !== "Қонақ") {
+      allNames = data.name;
+    }
 
     // Статус
     var statusText = "";
@@ -50,7 +64,6 @@ function doPost(e) {
       if (typeof data.guestCount === "number") {
         totalGuests = data.guestCount;
       } else if (data.guestCount === "3plus") {
-        // 3+ гостей: 2 основных + считаем через запятую в extra
         var extraCount = extra.trim() ? extra.trim().split(/,\s*/).length : 0;
         totalGuests = 2 + extraCount;
       } else {
@@ -70,6 +83,8 @@ function doPost(e) {
       } else {
         guestLabel = (guestNames.length || 1) + " қонақ";
       }
+    } else if (data.attendance === "not_coming") {
+      guestLabel = "Келмейді";
     }
 
     sheet.appendRow([
@@ -98,7 +113,7 @@ function doPost(e) {
 // ============================================================
 function updateDashboard() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var dataSheet = ss.getSheetByName("Ответы");
+  var dataSheet = ss.getSheetByName("Ответы") || ss.getActiveSheet();
   if (!dataSheet) return;
 
   var dashboard = ss.getSheetByName("Дашборд");
@@ -116,10 +131,11 @@ function updateDashboard() {
 
   // --- Сбор данных ---
   var data = dataSheet.getDataRange().getValues();
+  if (!data || data.length === 0) return;
   var headerRow = data[0];
   var statusCol = indexOfHeader(headerRow, "Статус", 2);
-  var guestCountCol = indexOfHeader(headerRow, "Количество гостей", 3);
-  var allNamesCol = indexOfHeader(headerRow, "Все имена", 5);
+  var guestCountCol = indexOfHeader(headerRow, "Қонақ саны", indexOfHeader(headerRow, "Количество гостей", 3));
+  var allNamesCol = indexOfHeader(headerRow, "Барлық есімдер", indexOfHeader(headerRow, "Все имена", 5));
 
   var totalComing = 0;
   var totalNotComing = 0;
@@ -141,7 +157,7 @@ function updateDashboard() {
       comingEntries.push({ name: allNamesStr || name_1, count: guests });
     } else if (status === "Келмейді") {
       totalNotComing++;
-      notComingNames.push(name_1);
+      notComingNames.push(name_1 || allNamesStr || "Қонақ");
     }
   }
 
@@ -284,9 +300,8 @@ function setupDashboard() {
   if (!sheet) {
     sheet = ss.insertSheet("Ответы");
   }
-  sheet.clear();
 
-  // Заголовки
+  // Заголовки (не удаляем существующие строки с гостями)
   var headers = ["Дата и время", "Есім", "Статус", "Қонақ саны", "Категория", "Барлық есімдер"];
   sheet.getRange("A1:F1").setValues([headers]);
   sheet.getRange("A1:F1")

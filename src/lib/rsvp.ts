@@ -47,7 +47,13 @@ export function validateRSVP({ name, attendance, guestNames = [], partnerName, d
     if (guestNameErrors.some(Boolean)) {
       errors.guestNames = guestNameErrors;
     }
-  } else if (attendance !== 'not_coming' && !name.trim()) {
+  } else if (attendance === 'not_coming') {
+    if (!declineConfirmed) {
+      errors.declineConfirmation = 'Алдымен шешіміңізді нақтылап жіберіңіз.';
+    } else if (!name.trim()) {
+      errors.name = 'Есіміңізді жазыңыз.';
+    }
+  } else if (!name.trim()) {
     errors.name = 'Есіміңізді жазыңыз.';
   }
 
@@ -57,10 +63,6 @@ export function validateRSVP({ name, attendance, guestNames = [], partnerName, d
 
   if (attendance === 'with_partner' && !partnerName.trim()) {
     errors.partnerName = 'Жұбайыңыздың есімін жазыңыз.';
-  }
-
-  if (attendance === 'not_coming' && !declineConfirmed) {
-    errors.declineConfirmation = 'Алдымен шешіміңізді нақтылап жіберіңіз.';
   }
 
   return errors;
@@ -73,6 +75,24 @@ export function hasRSVPErrors(errors: RSVPErrors) {
 export async function submitRSVP(submission: RSVPSubmission, endpoint = process.env.NEXT_PUBLIC_RSVP_ENDPOINT) {
   if (!endpoint) {
     throw new Error('RSVP endpoint is not configured.');
+  }
+
+  // If running in browser and endpoint is relative /api route, use standard json fetch
+  if (typeof window !== 'undefined' && endpoint.startsWith('/')) {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(submission),
+    });
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      throw new Error(data.error || 'Жауап жіберілмеді. Қайта көріңіз.');
+    }
+
+    return { success: true };
   }
 
   await fetch(endpoint, {

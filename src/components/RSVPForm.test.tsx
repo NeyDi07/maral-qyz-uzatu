@@ -71,7 +71,7 @@ describe('RSVPForm', () => {
     });
   });
 
-  it('softly asks declining guests to reconsider before final submission', async () => {
+  it('softly asks declining guests to reconsider before final submission and asks for their name', async () => {
     render(<RSVPForm />);
 
     fireEvent.click(screen.getByLabelText('Өкінішке орай, келе алмаймын'));
@@ -83,11 +83,18 @@ describe('RSVPForm', () => {
     expect(screen.getByText('Алдымен шешіміңізді нақтылап жіберіңіз.')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: 'Иә, өкінішке орай келе алмаймын' }));
+    expect(screen.getByLabelText('Есіміңізді жазыңыз')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Жіберу' }));
+    expect(screen.getByText('Есіміңізді жазыңыз.')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Есіміңізді жазыңыз'), { target: { value: 'Мұрат' } });
     fireEvent.click(screen.getByRole('button', { name: 'Жіберу' }));
 
     await waitFor(() => expect(globalThis.fetch).toHaveBeenCalledTimes(1));
     expect(screen.getByRole('dialog', { name: 'Жауап қабылданды' })).toBeInTheDocument();
     expect(screen.getByText('Өкінішті, әрине...')).toBeInTheDocument();
+    expect(screen.getByText('Мұрат, жауабыңыз қабылданды.')).toBeInTheDocument();
   });
 
   it('lets a declining guest switch back to coming from the reconsideration block', async () => {
